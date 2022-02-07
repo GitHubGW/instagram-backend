@@ -22,7 +22,8 @@
   "scripts": {
     "start": "nodemon --exec node src/server.js",
     "migrate": "npx prisma migrate dev",
-    "status" : "npx prisma migrate status"
+    "status" : "npx prisma migrate status",
+    "studio" : "npx prisma studio"
   },
   "keywords": [],
   "author": "GW <kowonp@gmail.com>",
