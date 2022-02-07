@@ -8,6 +8,9 @@
     "url": "git+https://github.com/GitHubGW/instagram-backend.git"
   },
   "dependencies": {
+    "@graphql-tools/load-files": "^6.5.3",
+    "@graphql-tools/merge": "^8.2.2",
+    "@graphql-tools/schema": "^8.3.1",
     "@prisma/client": "^3.9.1",
     "apollo-server": "^3.6.2",
     "graphql": "^16.3.0"
@@ -22,8 +25,8 @@
   "scripts": {
     "start": "nodemon --exec node src/server.js",
     "migrate": "npx prisma migrate dev",
-    "status" : "npx prisma migrate status",
-    "studio" : "npx prisma studio"
+    "status": "npx prisma migrate status",
+    "studio": "npx prisma studio"
   },
   "keywords": [],
   "author": "GW <kowonp@gmail.com>",
