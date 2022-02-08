@@ -4,6 +4,9 @@
     "outDir": "dist",
     "strict": true,
     "lib": ["esnext"],
-    "esModuleInterop": true
-  }
+    "esModuleInterop": true,
+    "module": "CommonJS",
+    "target": "es5"
+  },
+  "include": ["./src/**/*"]
 }
