@@ -21,3 +21,10 @@ export const handleGetLoggedInUser = async (token: string | string[] | undefined
     return null;
   }
 };
+
+export const handleCheckLogin = (loggedInUser: any): void => {
+  if (loggedInUser === null) {
+    console.log("로그인이 필요합니다.");
+    throw new Error();
+  }
+};
