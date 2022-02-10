@@ -1,7 +1,7 @@
 import * as bcrypt from "bcrypt";
-import { User } from ".prisma/client";
 import jwt from "jsonwebtoken";
-import prisma from "../../prisma";
+import { User } from ".prisma/client";
+import { Context, Resolvers } from "../../types";
 
 interface LoginArgs {
   username: string;
@@ -14,9 +14,9 @@ interface LoginResult {
   token?: string;
 }
 
-export default {
+const resolvers: Resolvers = {
   Mutation: {
-    login: async (_: any, { username, password }: LoginArgs): Promise<LoginResult> => {
+    login: async (_: any, { username, password }: LoginArgs, { prisma }: Context): Promise<LoginResult> => {
       try {
         const foundUser: User | null = await prisma.user.findFirst({ where: { username } });
 
@@ -41,3 +41,5 @@ export default {
     },
   },
 };
+
+export default resolvers;

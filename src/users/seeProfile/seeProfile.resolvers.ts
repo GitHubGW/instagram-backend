@@ -1,5 +1,5 @@
 import { User } from ".prisma/client";
-import prisma from "../../prisma";
+import { Context, Resolvers } from "../../types";
 
 interface SeeProfileArgs {
   username: string;
@@ -11,9 +11,9 @@ interface SeeProfileResult {
   user?: User;
 }
 
-export default {
+const resolvers: Resolvers = {
   Query: {
-    seeProfile: async (_: any, { username }: SeeProfileArgs): Promise<SeeProfileResult> => {
+    seeProfile: async (_: any, { username }: SeeProfileArgs, { prisma }: Context): Promise<SeeProfileResult> => {
       try {
         const foundUser: User | null = await prisma.user.findUnique({ where: { username } });
 
@@ -29,3 +29,5 @@ export default {
     },
   },
 };
+
+export default resolvers;

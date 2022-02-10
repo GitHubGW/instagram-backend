@@ -1,6 +1,6 @@
 import * as bcrypt from "bcrypt";
 import { User } from ".prisma/client";
-import prisma from "../../prisma";
+import { Context, Resolvers } from "../../types";
 
 interface CreateAccountArgs {
   name: string;
@@ -14,9 +14,9 @@ interface CreateAccountResult {
   message: string;
 }
 
-export default {
+const resolvers: Resolvers = {
   Mutation: {
-    createAccount: async (_: any, { name, username, email, password }: CreateAccountArgs): Promise<CreateAccountResult> => {
+    createAccount: async (_: any, { name, username, email, password }: CreateAccountArgs, { prisma }: Context): Promise<CreateAccountResult> => {
       try {
         const foundUser: User | null = await prisma.user.findFirst({ where: { OR: [{ username }, { email }] } });
 
@@ -34,3 +34,5 @@ export default {
     },
   },
 };
+
+export default resolvers;

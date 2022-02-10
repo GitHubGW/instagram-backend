@@ -22,7 +22,7 @@ export const handleGetLoggedInUser = async (token: string | string[] | undefined
   }
 };
 
-export const handleCheckLogin = (loggedInUser: any): void => {
+export const handleCheckLogin = (loggedInUser: User | null): void => {
   if (loggedInUser === null) {
     console.log("로그인이 필요합니다.");
     throw new Error();

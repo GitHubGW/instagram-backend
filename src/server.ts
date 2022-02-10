@@ -1,14 +1,15 @@
 import "dotenv/config";
 import { ApolloServer } from "apollo-server";
-import schema from "./schema";
 import { handleGetLoggedInUser, handleCheckLogin } from "./users/users.utils";
 import { User } from ".prisma/client";
+import schema from "./schema";
+import prisma from "./prisma";
 
 const server: ApolloServer = new ApolloServer({
   schema,
   context: async ({ req }) => {
     const foundUser: User | null = await handleGetLoggedInUser(req.headers.token);
-    return { loggedInUser: foundUser, handleCheckLogin };
+    return { prisma, loggedInUser: foundUser, handleCheckLogin };
   },
 });
 
