@@ -19,13 +19,15 @@
     "express": "^4.17.2",
     "graphql": "^16.3.0",
     "graphql-upload": "^13.0.0",
-    "jsonwebtoken": "^8.5.1"
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
     "@types/express": "^4.17.13",
     "@types/graphql-upload": "^8.0.10",
     "@types/jsonwebtoken": "^8.5.8",
+    "@types/morgan": "^1.9.3",
     "@types/node": "^17.0.15",
     "nodemon": "^2.0.15",
     "prisma": "^3.9.1",
