@@ -1,18 +1,27 @@
 import "dotenv/config";
-import { ApolloServer } from "apollo-server";
+import express, { Express } from "express";
+import { ApolloServer, ExpressContext } from "apollo-server-express";
+import { graphqlUploadExpress } from "graphql-upload";
 import { handleGetLoggedInUser, handleCheckLogin } from "./users/users.utils";
 import { User } from ".prisma/client";
-import schema from "./schema";
 import prisma from "./prisma";
+import schema from "./schema";
 
-const server: ApolloServer = new ApolloServer({
-  schema,
-  context: async ({ req }) => {
-    const foundUser: User | null = await handleGetLoggedInUser(req.headers.token);
-    return { prisma, loggedInUser: foundUser, handleCheckLogin };
-  },
-});
+const startServer = async () => {
+  const apolloServer: ApolloServer<ExpressContext> = new ApolloServer({
+    schema,
+    context: async ({ req }) => {
+      const foundUser: User | null = await handleGetLoggedInUser(req.headers.token);
+      return { prisma, loggedInUser: foundUser, handleCheckLogin };
+    },
+  });
+  await apolloServer.start();
 
-server.listen(process.env.PORT, (): void => {
-  console.log(`🚀 Apollo Server: http://localhost:${process.env.PORT}`);
-});
+  const app: Express = express();
+  app.use(graphqlUploadExpress());
+  apolloServer.applyMiddleware({ app });
+  await new Promise<void>((resolve) => app.listen({ port: process.env.PORT }, resolve));
+  console.log(`🚀 Server: http://localhost:${process.env.PORT}${apolloServer.graphqlPath}`);
+};
+
+startServer();
