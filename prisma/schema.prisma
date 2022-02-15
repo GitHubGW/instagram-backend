@@ -20,6 +20,26 @@ model User {
   avatarUrl String?
   following User[]   @relation(name: "FollowRelation", references: [id])
   followers User[]   @relation(name: "FollowRelation", references: [id])
+  photos    Photo[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Photo {
+  id        Int       @id @default(autoincrement())
+  user      User      @relation(fields: [userId], references: [id])
+  userId    Int
+  photoUrl  String
+  caption   String?
+  hashtags  Hashtag[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Hashtag {
+  id        Int      @id @default(autoincrement())
+  hashtag   String
+  photos    Photo[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
