@@ -17,9 +17,9 @@ const resolvers: Resolvers = {
   Query: {
     seeFollowers: async (_: any, { username, page }: SeeFollowersArgs, { prisma }: Context): Promise<SeeFollowersResult> => {
       try {
-        const foundUser: number = await prisma.user.count({ where: { username } });
+        const countedUser: number = await prisma.user.count({ where: { username } });
 
-        if (foundUser === 0) {
+        if (countedUser === 0) {
           return { ok: false, message: "존재하지 않는 유저입니다." };
         }
 

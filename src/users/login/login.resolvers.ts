@@ -21,7 +21,7 @@ const resolvers: Resolvers = {
         const foundUser: User | null = await prisma.user.findFirst({ where: { username } });
 
         if (foundUser === null) {
-          return { ok: false, message: "존재하지 않는 유저입니다." };
+          return { ok: false, message: "존재하지 않는 계정입니다." };
         }
 
         const isPasswordMatch: boolean = await bcrypt.compare(password, foundUser.password);
