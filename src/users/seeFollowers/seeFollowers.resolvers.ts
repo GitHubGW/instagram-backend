@@ -3,19 +3,18 @@ import { Context, Resolvers } from "../../types";
 
 interface SeeFollowersArgs {
   username: string;
-  page: number;
+  cursor?: string;
 }
 
 interface SeeFollowersResult {
   ok: boolean;
   message: string;
   followers?: User[];
-  totalPages?: number;
 }
 
 const resolvers: Resolvers = {
   Query: {
-    seeFollowers: async (_: any, { username, page }: SeeFollowersArgs, { prisma }: Context): Promise<SeeFollowersResult> => {
+    seeFollowers: async (_: any, { username, cursor }: SeeFollowersArgs, { prisma }: Context): Promise<SeeFollowersResult> => {
       try {
         const countedUser: number = await prisma.user.count({ where: { username } });
 
@@ -24,11 +23,11 @@ const resolvers: Resolvers = {
         }
 
         const foundFollowers: User[] = await prisma.user.findUnique({ where: { username } }).followers({
-          skip: (page - 1) * 5,
+          cursor: cursor === undefined ? undefined : { username: cursor },
+          skip: cursor === undefined ? 0 : 1,
           take: 5,
         });
-        const totalFollowers: number = await prisma.user.count({ where: { following: { some: { username } } } });
-        return { ok: true, message: "팔로워 보기에 성공하였습니다.", followers: foundFollowers, totalPages: Math.ceil(totalFollowers / 5) };
+        return { ok: true, message: "팔로워 보기에 성공하였습니다.", followers: foundFollowers };
       } catch (error) {
         console.log("seeFollowers error");
         return { ok: false, message: "팔로워 보기에 실패하였습니다." };

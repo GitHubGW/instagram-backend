@@ -30,7 +30,7 @@ const resolvers: Resolvers = {
           return { ok: false, message: "잘못된 비밀번호입니다." };
         }
 
-        const token: string = await jwt.sign({ userId: foundUser.id, username: foundUser.username }, process.env.JWT_SECRET_KEY as string, {
+        const token: string = await jwt.sign({ id: foundUser.id, username: foundUser.username }, process.env.JWT_SECRET_KEY as string, {
           expiresIn: "14d",
         });
         return { ok: true, message: "로그인에 성공하였습니다.", token };
