@@ -1,11 +1,28 @@
-import { User } from ".prisma/client";
+import { Photo, User } from ".prisma/client";
 import { Context, Resolvers } from "../types";
+
+interface UsersPhotosArgs {
+  cursor?: number;
+}
 
 const resolvers: Resolvers = {
   User: {
+    photos: async (parent: User, { cursor }: UsersPhotosArgs, { prisma, loggedInUser }: Context): Promise<Photo[] | null> => {
+      try {
+        const foundPhotos: Photo[] = await prisma.user.findUnique({ where: { id: loggedInUser?.id } }).photos({
+          cursor: cursor === undefined ? undefined : { id: cursor },
+          skip: cursor === undefined ? 0 : 1,
+          take: 9,
+        });
+        return foundPhotos;
+      } catch (error) {
+        console.log("photos error");
+        return null;
+      }
+    },
     totalFollowing: async (parent: User, args: any, { prisma }: Context): Promise<number | null> => {
       try {
-        const countedFollowing: number = await prisma.user.count({ where: { followers: { some: { username: parent.username } } } });
+        const countedFollowing: number = await prisma.user.count({ where: { followers: { some: { id: parent.id } } } });
         return countedFollowing;
       } catch (error) {
         console.log("totalFollowing error");
@@ -14,7 +31,7 @@ const resolvers: Resolvers = {
     },
     totalFollowers: async (parent: User, args: any, { prisma }: Context): Promise<number | null> => {
       try {
-        const countedFollowers: number = await prisma.user.count({ where: { following: { some: { username: parent.username } } } });
+        const countedFollowers: number = await prisma.user.count({ where: { following: { some: { id: parent.id } } } });
         return countedFollowers;
       } catch (error) {
         console.log("totalFollowers error");
@@ -28,7 +45,7 @@ const resolvers: Resolvers = {
         }
 
         const countedFollowing: number = await prisma.user.count({
-          where: { username: loggedInUser.username, following: { some: { username: parent.username } } },
+          where: { id: loggedInUser.id, following: { some: { id: parent.id } } },
         });
 
         if (countedFollowing === 0) {
@@ -42,7 +59,7 @@ const resolvers: Resolvers = {
       }
     },
     isMe: (parent: User, args: any, { loggedInUser }: Context): boolean => {
-      if (loggedInUser === null || parent.username !== loggedInUser.username) {
+      if (loggedInUser === null || parent.id !== loggedInUser.id) {
         return false;
       }
       return true;
