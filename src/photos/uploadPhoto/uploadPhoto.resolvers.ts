@@ -1,5 +1,6 @@
 import { Photo } from ".prisma/client";
 import { Context, Resolvers } from "../../types";
+import { ConnectOrCreate, handleExtractHashtags } from "../photos.utils";
 
 interface UploadPhotoArgs {
   photo: any;
@@ -12,31 +13,18 @@ interface UploadPhotoResult {
   photo?: Photo;
 }
 
-interface ConnectOrCreate {
-  where: { name: string };
-  create: { name: string };
-}
-
 const resolvers: Resolvers = {
   Mutation: {
     uploadPhoto: async (_: any, { photo, caption }: UploadPhotoArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<UploadPhotoResult> => {
       try {
         handleCheckLogin(loggedInUser);
 
-        let connectOrCreateArray: ConnectOrCreate[] | undefined = undefined;
-
-        if (caption) {
-          const matchedHashtags: RegExpMatchArray | null = caption?.match(/#[ㄱ-ㅎ|ㅏ-ㅣ|가-힣|\w]+/g);
-          const matchedUsers: RegExpMatchArray | null = caption?.match(/@[ㄱ-ㅎ|ㅏ-ㅣ|가-힣|\w]+/g);
-          connectOrCreateArray = matchedHashtags?.map((hashtag: string) => ({ where: { name: hashtag }, create: { name: hashtag } }));
-        }
-
         const createdPhoto: Photo = await prisma.photo.create({
           data: {
             photoUrl: "test",
             caption,
             user: { connect: { username: loggedInUser?.username } },
-            hashtags: { connectOrCreate: connectOrCreateArray },
+            hashtags: { connectOrCreate: caption === undefined ? undefined : handleExtractHashtags(caption) },
           },
         });
         return { ok: true, message: "사진 업로드에 성공하였습니다.", photo: createdPhoto };
