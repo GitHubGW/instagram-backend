@@ -26,6 +26,15 @@ const resolvers: Resolvers = {
         return null;
       }
     },
+    totalLikes: async (parent: Photo, args: any, { prisma }: Context): Promise<number | null> => {
+      try {
+        const countedLikes: number = await prisma.like.count({ where: { photoId: parent.id } });
+        return countedLikes;
+      } catch (error) {
+        console.log("totalLikes error");
+        return null;
+      }
+    },
   },
 };
 
