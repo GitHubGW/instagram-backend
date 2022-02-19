@@ -2,7 +2,7 @@ import { Like, User } from ".prisma/client";
 import { Context, Resolvers } from "../../types";
 
 interface SeePhotoLikesArgs {
-  id: number;
+  photoId: number;
   cursor?: string;
 }
 
@@ -14,10 +14,10 @@ interface SeePhotoLikesResult {
 
 const resolvers: Resolvers = {
   Query: {
-    seePhotoLikes: async (_: any, { id, cursor }: SeePhotoLikesArgs, { prisma }: Context): Promise<SeePhotoLikesResult> => {
+    seePhotoLikes: async (_: any, { photoId, cursor }: SeePhotoLikesArgs, { prisma }: Context): Promise<SeePhotoLikesResult> => {
       try {
         const foundLikeUsers: User[] = await prisma.user.findMany({
-          where: { likes: { some: { photoId: id } } },
+          where: { likes: { some: { photoId } } },
           cursor: cursor === undefined ? undefined : { username: cursor },
           skip: cursor === undefined ? 0 : 1,
           take: 5,

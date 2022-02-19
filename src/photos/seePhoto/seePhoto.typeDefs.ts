@@ -8,6 +8,6 @@ export default gql`
   }
 
   type Query {
-    seePhoto(id: Int!): SeePhotoResult!
+    seePhoto(photoId: Int!): SeePhotoResult!
   }
 `;

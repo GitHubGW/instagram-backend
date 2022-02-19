@@ -3,7 +3,7 @@ import { Context, Resolvers } from "../../types";
 import { handleExtractHashtags } from "../photos.utils";
 
 interface EditPhotoArgs {
-  id: number;
+  photoId: number;
   caption: string;
 }
 
@@ -14,12 +14,12 @@ interface EditPhotoResult {
 
 const resolvers: Resolvers = {
   Mutation: {
-    editPhoto: async (_: any, { id, caption }: EditPhotoArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<EditPhotoResult> => {
+    editPhoto: async (_: any, { photoId, caption }: EditPhotoArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<EditPhotoResult> => {
       try {
         handleCheckLogin(loggedInUser);
 
         const foundPhoto: (Photo & { hashtags: { name: string }[] }) | null = await prisma.photo.findFirst({
-          where: { id, userId: loggedInUser?.id },
+          where: { id: photoId, userId: loggedInUser?.id },
           include: { hashtags: { select: { name: true } } },
         });
 
@@ -28,7 +28,7 @@ const resolvers: Resolvers = {
         }
 
         await prisma.photo.update({
-          where: { id },
+          where: { id: photoId },
           data: {
             caption,
             hashtags: {

@@ -2,7 +2,7 @@ import { Photo } from ".prisma/client";
 import { Context, Resolvers } from "../../types";
 
 interface SeePhotoArgs {
-  id: number;
+  photoId: number;
 }
 
 interface SeePhotoResult {
@@ -13,9 +13,9 @@ interface SeePhotoResult {
 
 const resolvers: Resolvers = {
   Query: {
-    seePhoto: async (_: any, { id }: SeePhotoArgs, { prisma }: Context): Promise<SeePhotoResult> => {
+    seePhoto: async (_: any, { photoId }: SeePhotoArgs, { prisma }: Context): Promise<SeePhotoResult> => {
       try {
-        const foundPhoto: Photo | null = await prisma.photo.findUnique({ where: { id } });
+        const foundPhoto: Photo | null = await prisma.photo.findUnique({ where: { id: photoId } });
 
         if (foundPhoto === null) {
           return { ok: false, message: "존재하지 않는 사진입니다." };
