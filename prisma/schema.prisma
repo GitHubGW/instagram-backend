@@ -11,19 +11,20 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   name      String?
-  username  String   @unique
-  email     String   @unique
+  username  String    @unique
+  email     String    @unique
   password  String
   bio       String?
   avatarUrl String?
-  following User[]   @relation(name: "FollowRelation", references: [id])
-  followers User[]   @relation(name: "FollowRelation", references: [id])
+  following User[]    @relation(name: "FollowRelation", references: [id])
+  followers User[]    @relation(name: "FollowRelation", references: [id])
   photos    Photo[]
   likes     Like[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  comments  Comment[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 model Photo {
@@ -33,9 +34,10 @@ model Photo {
   photoUrl  String
   caption   String?
   hashtags  Hashtag[]
+  likes     Like[]
+  comments  Comment[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  likes     Like[]
 }
 
 model Hashtag {
@@ -48,12 +50,23 @@ model Hashtag {
 
 model Like {
   id        Int      @id @default(autoincrement())
-  photo     Photo    @relation(fields: [photoId], references: [id])
   user      User     @relation(fields: [userId], references: [id])
-  photoId   Int
+  photo     Photo    @relation(fields: [photoId], references: [id])
   userId    Int
+  photoId   Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@unique([photoId, userId])
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  text      String
+  user      User     @relation(fields: [userId], references: [id])
+  photo     Photo    @relation(fields: [photoId], references: [id])
+  userId    Int
+  photoId   Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
