@@ -35,6 +35,23 @@ const resolvers: Resolvers = {
         return null;
       }
     },
+    totalComments: async (parent: Photo, args: any, { prisma }: Context): Promise<number | null> => {
+      try {
+        const countedComments: number = await prisma.comment.count({ where: { photoId: parent.id } });
+        return countedComments;
+      } catch (error) {
+        console.log("totalComments error");
+        return null;
+      }
+    },
+    isMe: (parent: Photo, args: any, { loggedInUser }: Context): boolean => {
+      const isMe: boolean = parent.userId === loggedInUser?.id;
+
+      if (isMe === false) {
+        return false;
+      }
+      return true;
+    },
   },
 };
 
