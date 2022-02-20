@@ -1,6 +1,9 @@
+import { User } from ".prisma/client";
 import * as bcrypt from "bcrypt";
 import { createWriteStream, ReadStream, WriteStream } from "fs";
 import { finished } from "stream/promises";
+import { AvatarFile } from "../../shared/shared.interfaces";
+import { handleDeleteFileFromS3, handleUploadFileToS3 } from "../../shared/shared.utils";
 import { Context, Resolvers } from "../../types";
 
 interface EditProfileArgs {
@@ -17,13 +20,6 @@ interface EditProfileResult {
   message: string;
 }
 
-interface AvatarFile {
-  filename: string;
-  mimetype: string;
-  encoding: string;
-  createReadStream: () => ReadStream;
-}
-
 const resolvers: Resolvers = {
   Mutation: {
     editProfile: async (
@@ -36,16 +32,25 @@ const resolvers: Resolvers = {
 
         let hashedPassword: string | undefined = undefined;
         let avatarUrl: string | undefined = undefined;
+        const foundUser: User | null = await prisma.user.findUnique({ where: { id: loggedInUser?.id } });
 
-        if (avatar) {
-          const { filename, createReadStream }: AvatarFile = await avatar.file;
-          const newFilename: string = `${loggedInUser?.username}-${Date.now()}-${filename}`;
+        if (process.env.NODE_ENV === "development" && avatar) {
+          const { filename, createReadStream }: AvatarFile = avatar.file;
+          const newFilename: string = `${Date.now()}-${filename}`;
           const readStream: ReadStream = createReadStream();
           const writeStream: WriteStream = createWriteStream(`${process.cwd()}/uploads/${newFilename}`);
           readStream.pipe(writeStream);
           avatarUrl = `http://localhost:${process.env.PORT}/uploads/${newFilename}`;
           await finished(writeStream);
         }
+
+        if (process.env.NODE_ENV !== "development" && avatar) {
+          if (foundUser && foundUser.avatarUrl !== null) {
+            await handleDeleteFileFromS3(foundUser.avatarUrl);
+          }
+          avatarUrl = await handleUploadFileToS3(avatar, "avatars", loggedInUser?.username as string);
+        }
+
         if (password !== undefined) {
           hashedPassword = await bcrypt.hash(password, 10);
         }

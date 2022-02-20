@@ -8,6 +8,6 @@ export default gql`
   }
 
   type Query {
-    seePhotoLikes(id: Int!, cursor: String): SeePhotoLikesResult!
+    seePhotoLikes(photoId: Int!, cursor: String): SeePhotoLikesResult!
   }
 `;

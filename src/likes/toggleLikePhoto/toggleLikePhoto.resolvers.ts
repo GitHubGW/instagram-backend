@@ -16,7 +16,7 @@ const resolvers: Resolvers = {
       try {
         handleCheckLogin(loggedInUser);
 
-        const foundPhoto: Photo | null = await prisma.photo.findFirst({ where: { id: photoId, userId: loggedInUser?.id } });
+        const foundPhoto: Photo | null = await prisma.photo.findFirst({ where: { id: photoId } });
 
         if (foundPhoto === null) {
           return { ok: false, message: "존재하지 않는 사진입니다." };

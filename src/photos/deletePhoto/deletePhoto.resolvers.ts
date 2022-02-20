@@ -1,4 +1,5 @@
 import { Photo } from ".prisma/client";
+import { handleDeleteFileFromS3 } from "../../shared/shared.utils";
 import { Context, Resolvers } from "../../types";
 
 interface DeletePhotoArgs {
@@ -16,10 +17,13 @@ const resolvers: Resolvers = {
       try {
         handleCheckLogin(loggedInUser);
 
-        const countedPhoto: number = await prisma.photo.count({ where: { id: photoId, userId: loggedInUser?.id } });
+        const foundPhoto: Photo | null = await prisma.photo.findFirst({ where: { id: photoId, userId: loggedInUser?.id } });
 
-        if (countedPhoto === 0) {
+        if (foundPhoto === null) {
           return { ok: false, message: "존재하지 않는 사진입니다." };
+        }
+        if (process.env.NODE_ENV !== "development") {
+          handleDeleteFileFromS3(foundPhoto.photoUrl);
         }
 
         await prisma.photo.delete({ where: { id: photoId } });

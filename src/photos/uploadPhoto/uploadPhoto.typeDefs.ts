@@ -1,6 +1,8 @@
 import { gql } from "apollo-server-core";
 
 export default gql`
+  scalar Upload
+
   type UploadPhotoResult {
     ok: Boolean!
     message: String!
@@ -8,6 +10,6 @@ export default gql`
   }
 
   type Mutation {
-    uploadPhoto(photo: String!, caption: String): UploadPhotoResult!
+    uploadPhoto(photo: Upload!, caption: String): UploadPhotoResult!
   }
 `;
