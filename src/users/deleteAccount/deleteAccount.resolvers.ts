@@ -5,11 +5,9 @@ interface DeleteAccountArgs {
   userId: number;
 }
 
-interface DeleteAccountResult extends CommonResult {}
-
 const resolvers: Resolvers = {
   Mutation: {
-    deleteAccount: async (_: any, { userId }: DeleteAccountArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<DeleteAccountResult> => {
+    deleteAccount: async (_: any, { userId }: DeleteAccountArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<CommonResult> => {
       try {
         handleCheckLogin(loggedInUser);
 

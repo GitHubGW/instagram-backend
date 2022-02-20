@@ -7,11 +7,9 @@ interface DeletePhotoArgs {
   photoId: number;
 }
 
-interface DeletePhotoResult extends CommonResult {}
-
 const resolvers: Resolvers = {
   Mutation: {
-    deletePhoto: async (_: any, { photoId }: DeletePhotoArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<DeletePhotoResult> => {
+    deletePhoto: async (_: any, { photoId }: DeletePhotoArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<CommonResult> => {
       try {
         handleCheckLogin(loggedInUser);
 

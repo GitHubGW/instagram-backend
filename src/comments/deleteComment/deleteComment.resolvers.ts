@@ -5,11 +5,9 @@ interface DeleteCommentArgs {
   commentId: number;
 }
 
-interface DeleteCommentResult extends CommonResult {}
-
 const resolvers: Resolvers = {
   Mutation: {
-    deleteComment: async (_: any, { commentId }: DeleteCommentArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<DeleteCommentResult> => {
+    deleteComment: async (_: any, { commentId }: DeleteCommentArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<CommonResult> => {
       try {
         handleCheckLogin(loggedInUser);
 

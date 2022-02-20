@@ -7,11 +7,9 @@ interface CreateCommentArgs {
   text: string;
 }
 
-interface CreateCommentResult extends CommonResult {}
-
 const resolvers: Resolvers = {
   Mutation: {
-    createComment: async (_: any, { photoId, text }: CreateCommentArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<CreateCommentResult> => {
+    createComment: async (_: any, { photoId, text }: CreateCommentArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<CommonResult> => {
       try {
         handleCheckLogin(loggedInUser);
 

@@ -8,11 +8,9 @@ interface EditPhotoArgs {
   caption: string;
 }
 
-interface EditPhotoResult extends CommonResult {}
-
 const resolvers: Resolvers = {
   Mutation: {
-    editPhoto: async (_: any, { photoId, caption }: EditPhotoArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<EditPhotoResult> => {
+    editPhoto: async (_: any, { photoId, caption }: EditPhotoArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<CommonResult> => {
       try {
         handleCheckLogin(loggedInUser);
 

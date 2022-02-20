@@ -6,11 +6,9 @@ interface FollowUserArgs {
   username: string;
 }
 
-interface FollowUserResult extends CommonResult {}
-
 const resolvers: Resolvers = {
   Mutation: {
-    followUser: async (_: any, { username }: FollowUserArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<FollowUserResult> => {
+    followUser: async (_: any, { username }: FollowUserArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<CommonResult> => {
       try {
         handleCheckLogin(loggedInUser);
 
