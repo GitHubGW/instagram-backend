@@ -1,4 +1,5 @@
 import { Photo } from ".prisma/client";
+import { CommonResult } from "../../shared/shared.interfaces";
 import { handleDeleteFileFromS3 } from "../../shared/shared.utils";
 import { Context, Resolvers } from "../../types";
 
@@ -6,10 +7,7 @@ interface DeletePhotoArgs {
   photoId: number;
 }
 
-interface DeletePhotoResult {
-  ok: boolean;
-  message: string;
-}
+interface DeletePhotoResult extends CommonResult {}
 
 const resolvers: Resolvers = {
   Mutation: {

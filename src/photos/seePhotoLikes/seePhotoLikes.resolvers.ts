@@ -1,4 +1,5 @@
 import { Like, User } from ".prisma/client";
+import { CommonResult } from "../../shared/shared.interfaces";
 import { Context, Resolvers } from "../../types";
 
 interface SeePhotoLikesArgs {
@@ -6,9 +7,7 @@ interface SeePhotoLikesArgs {
   cursor?: string;
 }
 
-interface SeePhotoLikesResult {
-  ok: boolean;
-  message: string;
+interface SeePhotoLikesResult extends CommonResult {
   users?: User[];
 }
 

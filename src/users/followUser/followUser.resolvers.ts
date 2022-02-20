@@ -1,14 +1,12 @@
 import { User } from ".prisma/client";
+import { CommonResult } from "../../shared/shared.interfaces";
 import { Context, Resolvers } from "../../types";
 
 interface FollowUserArgs {
   username: string;
 }
 
-interface FollowUserResult {
-  ok: boolean;
-  message: string;
-}
+interface FollowUserResult extends CommonResult {}
 
 const resolvers: Resolvers = {
   Mutation: {

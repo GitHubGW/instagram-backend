@@ -1,4 +1,5 @@
 import { User } from ".prisma/client";
+import { CommonResult } from "../../shared/shared.interfaces";
 import { Context, Resolvers } from "../../types";
 
 interface SearchUsersArgs {
@@ -6,9 +7,7 @@ interface SearchUsersArgs {
   cursor?: string;
 }
 
-interface SearchUsersResult {
-  ok: boolean;
-  message: string;
+interface SearchUsersResult extends CommonResult {
   users?: User[];
 }
 

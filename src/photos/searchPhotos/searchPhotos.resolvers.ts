@@ -1,4 +1,5 @@
 import { Photo } from ".prisma/client";
+import { CommonResult } from "../../shared/shared.interfaces";
 import { Context, Resolvers } from "../../types";
 
 interface SearchPhotosArgs {
@@ -6,9 +7,7 @@ interface SearchPhotosArgs {
   cursor?: number;
 }
 
-interface SearchPhotosResult {
-  ok: boolean;
-  message: string;
+interface SearchPhotosResult extends CommonResult {
   photos?: Photo[];
 }
 

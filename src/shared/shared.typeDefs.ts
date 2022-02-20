@@ -1,7 +1,8 @@
 import { gql } from "apollo-server-core";
 
 export default gql`
-  type Mutation {
-    deletePhoto(photoId: Int!): CommonResult!
+  type CommonResult {
+    ok: Boolean!
+    message: String!
   }
 `;

@@ -1,7 +1,7 @@
 import { Photo } from ".prisma/client";
 import { createWriteStream, ReadStream, WriteStream } from "fs";
 import { finished } from "stream/promises";
-import { AvatarFile } from "../../shared/shared.interfaces";
+import { AvatarFile, CommonResult } from "../../shared/shared.interfaces";
 import { handleUploadFileToS3 } from "../../shared/shared.utils";
 import { Context, Resolvers } from "../../types";
 import { handleExtractHashtags } from "../photos.utils";
@@ -11,9 +11,7 @@ interface UploadPhotoArgs {
   caption?: string;
 }
 
-interface UploadPhotoResult {
-  ok: boolean;
-  message: string;
+interface UploadPhotoResult extends CommonResult {
   photo?: Photo;
 }
 

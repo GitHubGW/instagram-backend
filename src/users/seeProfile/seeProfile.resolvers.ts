@@ -1,13 +1,12 @@
 import { User } from ".prisma/client";
+import { CommonResult } from "../../shared/shared.interfaces";
 import { Context, Resolvers } from "../../types";
 
 interface SeeProfileArgs {
   username: string;
 }
 
-interface SeeProfileResult {
-  ok: boolean;
-  message: string;
+interface SeeProfileResult extends CommonResult {
   user?: User;
 }
 

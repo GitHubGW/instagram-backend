@@ -1,4 +1,5 @@
 import { User } from ".prisma/client";
+import { CommonResult } from "../../shared/shared.interfaces";
 import { Context, Resolvers } from "../../types";
 
 interface SeeFollowersArgs {
@@ -6,9 +7,7 @@ interface SeeFollowersArgs {
   cursor?: string;
 }
 
-interface SeeFollowersResult {
-  ok: boolean;
-  message: string;
+interface SeeFollowersResult extends CommonResult {
   followers?: User[];
 }
 

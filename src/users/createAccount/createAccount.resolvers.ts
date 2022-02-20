@@ -1,6 +1,7 @@
 import * as bcrypt from "bcrypt";
 import { User } from ".prisma/client";
 import { Context, Resolvers } from "../../types";
+import { CommonResult } from "../../shared/shared.interfaces";
 
 interface CreateAccountArgs {
   name: string;
@@ -9,10 +10,7 @@ interface CreateAccountArgs {
   password: string;
 }
 
-interface CreateAccountResult {
-  ok: boolean;
-  message: string;
-}
+interface CreateAccountResult extends CommonResult {}
 
 const resolvers: Resolvers = {
   Mutation: {

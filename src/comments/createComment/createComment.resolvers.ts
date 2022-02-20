@@ -1,4 +1,5 @@
 import { Photo } from ".prisma/client";
+import { CommonResult } from "../../shared/shared.interfaces";
 import { Context, Resolvers } from "../../types";
 
 interface CreateCommentArgs {
@@ -6,10 +7,7 @@ interface CreateCommentArgs {
   text: string;
 }
 
-interface CreateCommentResult {
-  ok: boolean;
-  message: string;
-}
+interface CreateCommentResult extends CommonResult {}
 
 const resolvers: Resolvers = {
   Mutation: {

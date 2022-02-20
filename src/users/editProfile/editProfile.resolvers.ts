@@ -2,7 +2,7 @@ import { User } from ".prisma/client";
 import * as bcrypt from "bcrypt";
 import { createWriteStream, ReadStream, WriteStream } from "fs";
 import { finished } from "stream/promises";
-import { AvatarFile } from "../../shared/shared.interfaces";
+import { AvatarFile, CommonResult } from "../../shared/shared.interfaces";
 import { handleDeleteFileFromS3, handleUploadFileToS3 } from "../../shared/shared.utils";
 import { Context, Resolvers } from "../../types";
 
@@ -15,10 +15,7 @@ interface EditProfileArgs {
   avatar?: any;
 }
 
-interface EditProfileResult {
-  ok: boolean;
-  message: string;
-}
+interface EditProfileResult extends CommonResult {}
 
 const resolvers: Resolvers = {
   Mutation: {

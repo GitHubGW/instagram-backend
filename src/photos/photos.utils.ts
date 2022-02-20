@@ -1,4 +1,4 @@
-export interface ConnectOrCreate {
+interface ConnectOrCreate {
   where: { name: string };
   create: { name: string };
 }

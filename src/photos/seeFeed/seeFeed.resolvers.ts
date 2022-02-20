@@ -1,13 +1,12 @@
 import { Photo } from ".prisma/client";
+import { CommonResult } from "../../shared/shared.interfaces";
 import { Context, Resolvers } from "../../types";
 
 interface SeeFeedArgs {
   cursor?: number;
 }
 
-interface SeeFeedResult {
-  ok: boolean;
-  message: string;
+interface SeeFeedResult extends CommonResult {
   photos?: Photo[];
 }
 

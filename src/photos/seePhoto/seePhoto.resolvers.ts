@@ -1,13 +1,12 @@
 import { Photo } from ".prisma/client";
+import { CommonResult } from "../../shared/shared.interfaces";
 import { Context, Resolvers } from "../../types";
 
 interface SeePhotoArgs {
   photoId: number;
 }
 
-interface SeePhotoResult {
-  ok: boolean;
-  message: string;
+interface SeePhotoResult extends CommonResult {
   photo?: Photo;
 }
 

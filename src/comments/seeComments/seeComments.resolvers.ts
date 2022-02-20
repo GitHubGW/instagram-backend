@@ -1,4 +1,5 @@
 import { Comment } from ".prisma/client";
+import { CommonResult } from "../../shared/shared.interfaces";
 import { Context, Resolvers } from "../../types";
 
 interface SeeCommentsArgs {
@@ -6,9 +7,7 @@ interface SeeCommentsArgs {
   cursor?: number;
 }
 
-interface SeeCommentsResult {
-  ok: boolean;
-  message: string;
+interface SeeCommentsResult extends CommonResult {
   comments?: Comment[];
 }
 

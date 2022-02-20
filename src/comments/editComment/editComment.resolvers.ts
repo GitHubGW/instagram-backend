@@ -1,4 +1,4 @@
-import { Comment } from ".prisma/client";
+import { CommonResult } from "../../shared/shared.interfaces";
 import { Context, Resolvers } from "../../types";
 
 interface EditCommentArgs {
@@ -6,10 +6,7 @@ interface EditCommentArgs {
   text: string;
 }
 
-interface EditCommentResult {
-  ok: boolean;
-  message: string;
-}
+interface EditCommentResult extends CommonResult {}
 
 const resolvers: Resolvers = {
   Mutation: {

@@ -1,13 +1,11 @@
+import { CommonResult } from "../../shared/shared.interfaces";
 import { Context, Resolvers } from "../../types";
 
 interface DeleteCommentArgs {
   commentId: number;
 }
 
-interface DeleteCommentResult {
-  ok: boolean;
-  message: string;
-}
+interface DeleteCommentResult extends CommonResult {}
 
 const resolvers: Resolvers = {
   Mutation: {

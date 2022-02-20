@@ -2,15 +2,14 @@ import * as bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { User } from ".prisma/client";
 import { Context, Resolvers } from "../../types";
+import { CommonResult } from "../../shared/shared.interfaces";
 
 interface LoginArgs {
   username: string;
   password: string;
 }
 
-interface LoginResult {
-  ok: boolean;
-  message: string;
+interface LoginResult extends CommonResult {
   token?: string;
 }
 

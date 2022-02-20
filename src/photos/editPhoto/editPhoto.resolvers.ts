@@ -1,4 +1,5 @@
 import { Photo } from ".prisma/client";
+import { CommonResult } from "../../shared/shared.interfaces";
 import { Context, Resolvers } from "../../types";
 import { handleExtractHashtags } from "../photos.utils";
 
@@ -7,10 +8,7 @@ interface EditPhotoArgs {
   caption: string;
 }
 
-interface EditPhotoResult {
-  ok: boolean;
-  message: string;
-}
+interface EditPhotoResult extends CommonResult {}
 
 const resolvers: Resolvers = {
   Mutation: {

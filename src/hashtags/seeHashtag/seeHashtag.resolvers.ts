@@ -1,13 +1,12 @@
 import { Hashtag } from ".prisma/client";
+import { CommonResult } from "../../shared/shared.interfaces";
 import { Context, Resolvers } from "../../types";
 
 interface SeeHashtagArgs {
   name: string;
 }
 
-interface SeeHashtagResult {
-  ok: boolean;
-  message: string;
+interface SeeHashtagResult extends CommonResult {
   hashtag?: Hashtag;
 }
 

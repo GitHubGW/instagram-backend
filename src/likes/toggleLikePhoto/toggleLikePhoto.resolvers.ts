@@ -1,14 +1,12 @@
 import { Like, Photo } from ".prisma/client";
+import { CommonResult } from "../../shared/shared.interfaces";
 import { Context, Resolvers } from "../../types";
 
 interface ToggleLikePhotoArgs {
   photoId: number;
 }
 
-interface ToggleLikePhotoResult {
-  ok: boolean;
-  message: string;
-}
+interface ToggleLikePhotoResult extends CommonResult {}
 
 const resolvers: Resolvers = {
   Mutation: {
