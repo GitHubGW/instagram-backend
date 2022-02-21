@@ -23,6 +23,8 @@ model User {
   photos    Photo[]
   likes     Like[]
   comments  Comment[]
+  rooms     Room[]
+  messages  Message[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
@@ -67,6 +69,25 @@ model Comment {
   photo     Photo    @relation(fields: [photoId], references: [id], onDelete: Cascade)
   userId    Int
   photoId   Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Room {
+  id        Int       @id @default(autoincrement())
+  users     User[]
+  messages  Message[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Message {
+  id        Int      @id @default(autoincrement())
+  text      String
+  user      User     @relation(fields: [userId], references: [id])
+  room      Room     @relation(fields: [roomId], references: [id])
+  userId    Int
+  roomId    Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
