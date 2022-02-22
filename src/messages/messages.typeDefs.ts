@@ -4,6 +4,7 @@ export default gql`
   type Message {
     id: Int!
     text: String!
+    read: Boolean!
     user: User!
     room: Room!
     createdAt: String!
