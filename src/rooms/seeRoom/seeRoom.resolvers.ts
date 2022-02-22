@@ -18,7 +18,7 @@ const resolvers: Resolvers = {
 
         const foundRoom: Room | null = await prisma.room.findFirst({
           where: { id: roomId, users: { some: { id: loggedInUser?.id } } },
-          include: { users: true, messages: true },
+          include: { users: true, messages: { include: { user: true } } },
         });
 
         if (foundRoom === null) {

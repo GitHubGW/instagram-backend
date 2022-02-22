@@ -12,7 +12,10 @@ const resolvers: Resolvers = {
       try {
         handleCheckLogin(loggedInUser);
 
-        const foundRooms: Room[] = await prisma.room.findMany({ where: { users: { some: { id: loggedInUser?.id } } } });
+        const foundRooms: Room[] = await prisma.room.findMany({
+          where: { users: { some: { id: loggedInUser?.id } } },
+          include: { users: true, messages: { include: { user: true } } },
+        });
 
         if (foundRooms.length === 0) {
           return { ok: false, message: "존재하는 채팅방이 없습니다." };
