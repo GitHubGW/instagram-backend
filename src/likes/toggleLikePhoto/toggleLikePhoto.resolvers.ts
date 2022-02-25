@@ -1,4 +1,5 @@
 import { Like, Photo } from ".prisma/client";
+import pubsub from "../../pubsub";
 import { CommonResult } from "../../shared/shared.interfaces";
 import { Context, Resolvers } from "../../types";
 
@@ -25,12 +26,14 @@ const resolvers: Resolvers = {
           return { ok: true, message: "사진 '좋아요 취소'에 성공하였습니다." };
         }
 
-        await prisma.like.create({
+        const createdLike: Like = await prisma.like.create({
           data: {
             photo: { connect: { id: photoId } },
             user: { connect: { id: loggedInUser?.id } },
           },
+          include: { photo: true, user: true },
         });
+        pubsub.publish("LIKE_UPDATES", { likeUpdates: createdLike });
         return { ok: true, message: "사진 '좋아요'에 성공하였습니다." };
       } catch (error) {
         console.log("likePhoto error");
