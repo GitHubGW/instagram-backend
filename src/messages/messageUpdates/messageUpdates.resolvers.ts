@@ -26,7 +26,7 @@ const resolvers = {
         });
 
         if (foundRoom === null) {
-          throw new Error("존재하지 않는 채팅방입니다.");
+          throw new Error("존재하지 않거나 구독할 수 없는 채팅방입니다.");
         }
 
         return withFilter(

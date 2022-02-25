@@ -1,4 +1,5 @@
 import { User } from ".prisma/client";
+import pubsub from "../../pubsub";
 import { CommonResult } from "../../shared/shared.interfaces";
 import { Context, Resolvers } from "../../types";
 
@@ -19,6 +20,7 @@ const resolvers: Resolvers = {
         }
 
         await prisma.user.update({ where: { id: loggedInUser?.id }, data: { following: { connect: { username } } } });
+        pubsub.publish("FOLLOW_UPDATES", { followUpdates: loggedInUser });
         return { ok: true, message: "팔로우에 성공하였습니다." };
       } catch (error) {
         console.log("followUser error");
