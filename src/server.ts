@@ -10,7 +10,6 @@ import { User } from ".prisma/client";
 import { handleGetLoggedInUser, handleCheckLogin } from "./users/users.utils";
 import prisma from "./prisma";
 import schema from "./schema";
-import pubsub from "./pubsub";
 
 interface ConnectionParams {
   token?: string;
@@ -19,7 +18,6 @@ interface ConnectionParams {
 
 const startServer = async (): Promise<void> => {
   const app: Express = express();
-  // app.use(morgan("dev"));
   app.use(graphqlUploadExpress());
   app.use("/uploads", express.static("uploads"));
 
@@ -33,7 +31,6 @@ const startServer = async (): Promise<void> => {
         if (token === undefined) {
           throw new Error("토큰이 존재하지 않기 때문에 Subscription Server에 연결할 수 없습니다.");
         }
-
         const foundUser: User | null = await handleGetLoggedInUser(token);
         return { loggedInUser: foundUser };
       },

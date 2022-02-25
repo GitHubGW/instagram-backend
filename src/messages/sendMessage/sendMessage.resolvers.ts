@@ -1,4 +1,5 @@
-import { Room } from ".prisma/client";
+import { Message, Room } from ".prisma/client";
+import pubsub from "../../pubsub";
 import { CommonResult } from "../../shared/shared.interfaces";
 import { Context, Resolvers } from "../../types";
 
@@ -25,7 +26,7 @@ const resolvers: Resolvers = {
           return { ok: false, message: "채팅방 아이디와 유저 아이디 중 하나만 존재해야 합니다." };
         }
 
-        if (userId) {
+        if (userId && roomId === undefined) {
           const countedUser: number = await prisma.user.count({ where: { id: userId } });
 
           if (countedUser === 0) {
@@ -35,27 +36,33 @@ const resolvers: Resolvers = {
           const createdRoom: Room = await prisma.room.create({
             data: { users: { connect: [{ id: loggedInUser?.id }, { id: userId }] } },
           });
-          await prisma.message.create({
+          const createdMessage: Message = await prisma.message.create({
             data: {
               text,
               user: { connect: { id: loggedInUser?.id } },
               room: { connect: { id: createdRoom.id } },
             },
+            include: { user: true, room: true },
           });
-        } else if (roomId) {
+          pubsub.publish("MESSAGE_UPDATES", { messageUpdates: createdMessage });
+        }
+
+        if (roomId && userId === undefined) {
           const countedRoom: number = await prisma.room.count({ where: { id: roomId } });
 
           if (countedRoom === 0) {
             return { ok: false, message: "존재하지 않는 채팅방입니다." };
           }
 
-          await prisma.message.create({
+          const createdMessage: Message = await prisma.message.create({
             data: {
               text,
               user: { connect: { id: loggedInUser?.id } },
               room: { connect: { id: roomId } },
             },
+            include: { user: true, room: true },
           });
+          pubsub.publish("MESSAGE_UPDATES", { messageUpdates: createdMessage });
         }
 
         return { ok: true, message: "메시지 전송에 성공하였습니다." };
