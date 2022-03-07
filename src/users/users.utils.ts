@@ -9,7 +9,7 @@ export const handleGetLoggedInUser = async (token: string | string[] | undefined
     }
 
     const decodedPayload: any = await jwt.verify(token as string, process.env.JWT_SECRET_KEY as string);
-    const foundUser: User | null = await prisma.user.findUnique({ where: { id: decodedPayload.id } });
+    const foundUser: User | null = await prisma.user.findUnique({ where: { id: decodedPayload?.id } });
 
     if (foundUser === null) {
       throw new Error();

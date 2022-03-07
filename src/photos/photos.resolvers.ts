@@ -1,4 +1,4 @@
-import { Hashtag, Photo, User } from ".prisma/client";
+import { Hashtag, Like, Photo, User } from ".prisma/client";
 import { Context, Resolvers } from "../types";
 
 const resolvers: Resolvers = {
@@ -51,6 +51,24 @@ const resolvers: Resolvers = {
         return false;
       }
       return true;
+    },
+    isLiked: async (parent: Photo, args: any, { prisma, loggedInUser }: Context): Promise<boolean> => {
+      try {
+        if (loggedInUser === null) {
+          return false;
+        }
+
+        const countedLike: number = await prisma.like.count({ where: { photoId: parent.id, userId: loggedInUser.id } });
+
+        if (countedLike === 0) {
+          return false;
+        }
+
+        return true;
+      } catch (error) {
+        console.log("isLiked error");
+        return false;
+      }
     },
   },
 };
