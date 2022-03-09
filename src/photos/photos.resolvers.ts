@@ -1,4 +1,4 @@
-import { Hashtag, Like, Photo, User } from ".prisma/client";
+import { Hashtag, Photo, User, Comment } from ".prisma/client";
 import { Context, Resolvers } from "../types";
 
 const resolvers: Resolvers = {
@@ -26,22 +26,31 @@ const resolvers: Resolvers = {
         return null;
       }
     },
-    totalLikes: async (parent: Photo, args: any, { prisma }: Context): Promise<number | null> => {
+    comments: async (parent: Photo, args: any, { prisma }: Context): Promise<Comment[] | null> => {
+      try {
+        const foundComments: Comment[] = await await prisma.photo.findUnique({ where: { id: parent.id } }).comments({ include: { user: true } });
+        return foundComments;
+      } catch (error) {
+        console.log("comments error");
+        return null;
+      }
+    },
+    totalLikes: async (parent: Photo, args: any, { prisma }: Context): Promise<number> => {
       try {
         const countedLikes: number = await prisma.like.count({ where: { photoId: parent.id } });
         return countedLikes;
       } catch (error) {
         console.log("totalLikes error");
-        return null;
+        return 0;
       }
     },
-    totalComments: async (parent: Photo, args: any, { prisma }: Context): Promise<number | null> => {
+    totalComments: async (parent: Photo, args: any, { prisma }: Context): Promise<number> => {
       try {
         const countedComments: number = await prisma.comment.count({ where: { photoId: parent.id } });
         return countedComments;
       } catch (error) {
         console.log("totalComments error");
-        return null;
+        return 0;
       }
     },
     isMe: (parent: Photo, args: any, { loggedInUser }: Context): boolean => {

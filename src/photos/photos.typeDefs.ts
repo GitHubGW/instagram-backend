@@ -7,6 +7,7 @@ export default gql`
     photoUrl: String!
     caption: String
     hashtags: [Hashtag]
+    comments: [Comment]
     totalLikes: Int!
     totalComments: Int!
     isMe: Boolean!
