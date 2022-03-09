@@ -21,13 +21,13 @@ const resolvers: Resolvers = {
         return null;
       }
     },
-    totalPhotos: async (parent: Hashtag, args: any, { prisma }: Context): Promise<number | null> => {
+    totalPhotos: async (parent: Hashtag, args: any, { prisma }: Context): Promise<number> => {
       try {
         const countedPhotos: number = await prisma.photo.count({ where: { hashtags: { some: { name: parent.name } } } });
         return countedPhotos;
       } catch (error) {
         console.log("totalPhotos error");
-        return null;
+        return 0;
       }
     },
   },

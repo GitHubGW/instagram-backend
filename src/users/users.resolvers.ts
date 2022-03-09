@@ -20,22 +20,22 @@ const resolvers: Resolvers = {
         return null;
       }
     },
-    totalFollowing: async (parent: User, args: any, { prisma }: Context): Promise<number | null> => {
+    totalFollowing: async (parent: User, args: any, { prisma }: Context): Promise<number> => {
       try {
         const countedFollowing: number = await prisma.user.count({ where: { followers: { some: { id: parent.id } } } });
         return countedFollowing;
       } catch (error) {
         console.log("totalFollowing error");
-        return null;
+        return 0;
       }
     },
-    totalFollowers: async (parent: User, args: any, { prisma }: Context): Promise<number | null> => {
+    totalFollowers: async (parent: User, args: any, { prisma }: Context): Promise<number> => {
       try {
         const countedFollowers: number = await prisma.user.count({ where: { following: { some: { id: parent.id } } } });
         return countedFollowers;
       } catch (error) {
         console.log("totalFollowers error");
-        return null;
+        return 0;
       }
     },
     isFollowing: async (parent: User, args: any, { prisma, loggedInUser }: Context): Promise<boolean> => {

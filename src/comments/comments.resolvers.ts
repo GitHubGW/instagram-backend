@@ -9,6 +9,7 @@ const resolvers: Resolvers = {
       if (isMe === false) {
         return false;
       }
+
       return true;
     },
   },
