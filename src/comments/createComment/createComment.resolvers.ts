@@ -29,7 +29,7 @@ const resolvers: Resolvers = {
           include: { photo: true, user: true },
         });
         pubsub.publish("COMMENT_UPDATES", { commentUpdates: createdComment });
-        return { ok: true, message: "댓글 생성에 성공하였습니다." };
+        return { ok: true, message: "댓글 생성에 성공하였습니다.", id: createdComment.id };
       } catch (error) {
         console.log("createComment error");
         return { ok: false, message: "댓글 생성에 실패하였습니다." };
