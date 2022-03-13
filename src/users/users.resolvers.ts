@@ -7,9 +7,9 @@ interface UsersPhotosArgs {
 
 const resolvers: Resolvers = {
   User: {
-    photos: async (parent: User, { cursor }: UsersPhotosArgs, { prisma, loggedInUser }: Context): Promise<Photo[] | null> => {
+    photos: async (parent: User, { cursor }: UsersPhotosArgs, { prisma }: Context): Promise<Photo[] | null> => {
       try {
-        const foundPhotos: Photo[] = await prisma.user.findUnique({ where: { id: loggedInUser?.id } }).photos({
+        const foundPhotos: Photo[] = await prisma.user.findUnique({ where: { id: parent.id } }).photos({
           cursor: cursor === undefined ? undefined : { id: cursor },
           skip: cursor === undefined ? 0 : 1,
           take: 9,
@@ -35,6 +35,15 @@ const resolvers: Resolvers = {
         return countedFollowers;
       } catch (error) {
         console.log("totalFollowers error");
+        return 0;
+      }
+    },
+    totalPhotos: async (parent: User, args: any, { prisma }: Context): Promise<number> => {
+      try {
+        const countedPhotos: number = await prisma.photo.count({ where: { userId: parent.id } });
+        return countedPhotos;
+      } catch (error) {
+        console.log("totalPhotos error");
         return 0;
       }
     },
