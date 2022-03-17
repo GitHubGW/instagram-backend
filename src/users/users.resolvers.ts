@@ -9,10 +9,12 @@ const resolvers: Resolvers = {
   User: {
     photos: async (parent: User, { cursor }: UsersPhotosArgs, { prisma }: Context): Promise<Photo[] | null> => {
       try {
-        const foundPhotos: Photo[] = await prisma.user.findUnique({ where: { id: parent.id } }).photos({
+        const foundPhotos: Photo[] = await prisma.photo.findMany({
+          where: { userId: parent.id },
+          orderBy: { createdAt: "desc" },
           cursor: cursor === undefined ? undefined : { id: cursor },
           skip: cursor === undefined ? 0 : 1,
-          take: 9,
+          take: 12,
         });
         return foundPhotos;
       } catch (error) {

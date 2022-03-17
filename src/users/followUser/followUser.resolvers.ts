@@ -7,9 +7,13 @@ interface FollowUserArgs {
   username: string;
 }
 
+interface FollowUserResult extends CommonResult {
+  user?: User;
+}
+
 const resolvers: Resolvers = {
   Mutation: {
-    followUser: async (_: any, { username }: FollowUserArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<CommonResult> => {
+    followUser: async (_: any, { username }: FollowUserArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<FollowUserResult> => {
       try {
         handleCheckLogin(loggedInUser);
 
@@ -21,7 +25,7 @@ const resolvers: Resolvers = {
 
         await prisma.user.update({ where: { id: loggedInUser?.id }, data: { following: { connect: { username } } } });
         pubsub.publish("FOLLOW_UPDATES", { followUpdates: loggedInUser });
-        return { ok: true, message: "팔로우에 성공하였습니다." };
+        return { ok: true, message: "팔로우에 성공하였습니다.", user: foundUser };
       } catch (error) {
         console.log("followUser error");
         return { ok: false, message: "팔로우에 실패하였습니다." };

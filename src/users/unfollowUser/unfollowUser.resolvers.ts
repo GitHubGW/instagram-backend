@@ -6,9 +6,13 @@ interface UnfollowUserArgs {
   username: string;
 }
 
+interface UnfollowUserResult extends CommonResult {
+  user?: User;
+}
+
 const resolvers: Resolvers = {
   Mutation: {
-    unfollowUser: async (_: any, { username }: UnfollowUserArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<CommonResult> => {
+    unfollowUser: async (_: any, { username }: UnfollowUserArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<UnfollowUserResult> => {
       try {
         handleCheckLogin(loggedInUser);
 
@@ -19,7 +23,7 @@ const resolvers: Resolvers = {
         }
 
         await prisma.user.update({ where: { id: loggedInUser?.id }, data: { following: { disconnect: { username } } } });
-        return { ok: true, message: "언팔로우에 성공하였습니다." };
+        return { ok: true, message: "언팔로우에 성공하였습니다.", user: foundUser };
       } catch (error) {
         console.log("unfollowUser error");
         return { ok: false, message: "언팔로우에 실패하였습니다." };
