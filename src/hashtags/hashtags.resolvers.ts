@@ -13,7 +13,7 @@ const resolvers: Resolvers = {
           where: { hashtags: { some: { name: parent.name } } },
           cursor: cursor === undefined ? undefined : { id: cursor },
           skip: cursor === undefined ? 0 : 1,
-          take: 9,
+          take: 12,
         });
         return foundPhotos;
       } catch (error) {

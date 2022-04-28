@@ -5,6 +5,7 @@ export default gql`
     ok: Boolean!
     message: String!
     room: Room
+    id: Int
   }
 
   type Mutation {

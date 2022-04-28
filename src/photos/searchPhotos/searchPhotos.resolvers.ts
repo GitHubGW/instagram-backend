@@ -19,7 +19,7 @@ const resolvers: Resolvers = {
           where: { caption: { contains: keyword } },
           cursor: cursor === undefined ? undefined : { id: cursor },
           skip: cursor === undefined ? 0 : 1,
-          take: 9,
+          take: 20,
         });
         return { ok: true, message: "사진 검색에 성공하였습니다.", photos: foundPhotos };
       } catch (error) {

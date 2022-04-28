@@ -23,7 +23,7 @@ const resolvers: Resolvers = {
           where: { username: { contains: username.toLowerCase() } },
           cursor: cursor === undefined ? undefined : { username: cursor },
           skip: cursor === undefined ? 0 : 1,
-          take: 5,
+          take: 20,
         });
         return { ok: true, message: "유저 검색에 성공하였습니다.", users: foundUsers };
       } catch (error) {

@@ -19,6 +19,7 @@ interface ConnectionParams {
 const startServer = async (): Promise<void> => {
   const app: Express = express();
   app.use(graphqlUploadExpress());
+  // app.use(morgan("dev"));
   app.use("/uploads", express.static("uploads"));
 
   const httpServer: Server = createServer(app);

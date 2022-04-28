@@ -17,7 +17,7 @@ export const handleGetLoggedInUser = async (token: string | string[] | undefined
 
     return foundUser;
   } catch (error) {
-    console.log("handleGetLoggedInUser error");
+    console.log("로그인하지 않은 유저입니다.");
     return null;
   }
 };

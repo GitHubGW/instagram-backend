@@ -23,7 +23,7 @@ const resolvers: Resolvers = {
         }
 
         await prisma.photo.delete({ where: { id: photoId } });
-        return { ok: true, message: "사진 삭제에 성공하였습니다." };
+        return { ok: true, message: "사진 삭제에 성공하였습니다.", id: foundPhoto.id };
       } catch (error) {
         console.log("deletePhoto error");
         return { ok: false, message: "사진 삭제에 실패하였습니다." };

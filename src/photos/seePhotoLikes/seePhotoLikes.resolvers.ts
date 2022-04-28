@@ -15,11 +15,17 @@ const resolvers: Resolvers = {
   Query: {
     seePhotoLikes: async (_: any, { photoId, cursor }: SeePhotoLikesArgs, { prisma }: Context): Promise<SeePhotoLikesResult> => {
       try {
+        const foundPhoto: number = await prisma.photo.count({ where: { id: photoId } });
+
+        if (foundPhoto === 0) {
+          return { ok: false, message: "존재하지 않는 사진입니다." };
+        }
+
         const foundLikeUsers: User[] = await prisma.user.findMany({
           where: { likes: { some: { photoId } } },
           cursor: cursor === undefined ? undefined : { username: cursor },
           skip: cursor === undefined ? 0 : 1,
-          take: 5,
+          take: 20,
         });
         return { ok: true, message: "사진 '좋아요' 유저 보기에 성공하였습니다.", users: foundLikeUsers };
       } catch (error) {

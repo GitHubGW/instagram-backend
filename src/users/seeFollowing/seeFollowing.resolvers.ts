@@ -24,7 +24,7 @@ const resolvers: Resolvers = {
         const foundFollowing: User[] = await prisma.user.findUnique({ where: { username } }).following({
           cursor: cursor === undefined ? undefined : { username: cursor },
           skip: cursor === undefined ? 0 : 1,
-          take: 10,
+          take: 20,
         });
         return { ok: true, message: "팔로우 보기에 성공하였습니다.", following: foundFollowing };
       } catch (error) {

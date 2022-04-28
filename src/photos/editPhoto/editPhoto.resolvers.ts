@@ -34,7 +34,7 @@ const resolvers: Resolvers = {
           },
         });
 
-        return { ok: true, message: "사진 수정에 성공하였습니다." };
+        return { ok: true, message: "사진 수정에 성공하였습니다.", id: foundPhoto.id };
       } catch (error) {
         console.log("editPhoto error");
         return { ok: false, message: "사진 수정에 실패하였습니다." };

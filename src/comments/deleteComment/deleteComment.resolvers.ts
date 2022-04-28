@@ -18,7 +18,7 @@ const resolvers: Resolvers = {
         }
 
         await prisma.comment.delete({ where: { id: commentId } });
-        return { ok: true, message: "댓글 삭제에 성공하였습니다." };
+        return { ok: true, message: "댓글 삭제에 성공하였습니다.", id: commentId };
       } catch (error) {
         console.log("deleteComment error");
         return { ok: false, message: "댓글 삭제에 실패하였습니다." };

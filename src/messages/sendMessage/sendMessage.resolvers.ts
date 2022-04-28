@@ -1,4 +1,4 @@
-import { Message, Room } from ".prisma/client";
+import { Message, Room, User } from ".prisma/client";
 import pubsub from "../../pubsub";
 import { CommonResult } from "../../shared/shared.interfaces";
 import { Context, Resolvers } from "../../types";
@@ -36,7 +36,7 @@ const resolvers: Resolvers = {
           const createdRoom: Room = await prisma.room.create({
             data: { users: { connect: [{ id: loggedInUser?.id }, { id: userId }] } },
           });
-          const createdMessage: Message = await prisma.message.create({
+          const createdMessage: Message & { user: User; room: Room } = await prisma.message.create({
             data: {
               text,
               user: { connect: { id: loggedInUser?.id } },
@@ -45,6 +45,7 @@ const resolvers: Resolvers = {
             include: { user: true, room: true },
           });
           pubsub.publish("MESSAGE_UPDATES", { messageUpdates: createdMessage });
+          return { ok: true, message: "메시지 전송에 성공하였습니다.", id: createdMessage.id };
         }
 
         if (roomId && userId === undefined) {
@@ -54,7 +55,7 @@ const resolvers: Resolvers = {
             return { ok: false, message: "존재하지 않는 채팅방입니다." };
           }
 
-          const createdMessage: Message = await prisma.message.create({
+          const createdMessage: Message & { user: User; room: Room } = await prisma.message.create({
             data: {
               text,
               user: { connect: { id: loggedInUser?.id } },
@@ -63,6 +64,7 @@ const resolvers: Resolvers = {
             include: { user: true, room: true },
           });
           pubsub.publish("MESSAGE_UPDATES", { messageUpdates: createdMessage });
+          return { ok: true, message: "메시지 전송에 성공하였습니다.", id: createdMessage.id };
         }
 
         return { ok: true, message: "메시지 전송에 성공하였습니다." };

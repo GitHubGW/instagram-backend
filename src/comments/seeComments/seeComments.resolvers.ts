@@ -23,11 +23,13 @@ const resolvers: Resolvers = {
 
         const foundComments: Comment[] = await prisma.comment.findMany({
           where: { photoId },
+          include: { user: true },
           orderBy: { createdAt: "desc" },
           cursor: cursor === undefined ? undefined : { id: cursor },
           skip: cursor === undefined ? 0 : 1,
-          take: 10,
+          take: 15,
         });
+
         return { ok: true, message: "댓글 보기에 성공하였습니다.", comments: foundComments };
       } catch (error) {
         console.log("seeComments error");
