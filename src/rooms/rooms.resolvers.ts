@@ -1,4 +1,4 @@
-import { Room } from ".prisma/client";
+import { Message, Room } from ".prisma/client";
 import { Context, Resolvers } from "../types";
 
 const resolvers: Resolvers = {
@@ -17,6 +17,19 @@ const resolvers: Resolvers = {
       } catch (error) {
         console.log("totalUnreadMessages error");
         return 0;
+      }
+    },
+    latestMessage: async (parent: Room, __any, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<Message | null> => {
+      try {
+        handleCheckLogin(loggedInUser);
+        const latestMessage: Message | null = await prisma.message.findFirst({
+          where: { roomId: parent.id },
+          orderBy: { createdAt: "desc" },
+        });
+        return latestMessage;
+      } catch (error) {
+        console.log("latestMessage error");
+        return null;
       }
     },
   },

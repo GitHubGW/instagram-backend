@@ -6,6 +6,7 @@ export default gql`
     users: [User]
     messages: [Message]
     totalUnreadMessages: Int!
+    latestMessage: Message
     createdAt: String!
     updatedAt: String!
   }
