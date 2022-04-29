@@ -1,4 +1,4 @@
-import { User } from ".prisma/client";
+import { Photo, User } from ".prisma/client";
 import { CommonResult } from "../../shared/shared.interfaces";
 import { Context, Resolvers } from "../../types";
 
@@ -14,12 +14,13 @@ const resolvers: Resolvers = {
   Query: {
     seeProfile: async (_: any, { username }: SeeProfileArgs, { prisma }: Context): Promise<SeeProfileResult> => {
       try {
-        const foundUser: User | null = await prisma.user.findUnique({ where: { username }, include: { followers: true, following: true } });
-
+        const foundUser = await prisma.user.findUnique({
+          where: { username },
+          include: { followers: true, following: true },
+        });
         if (foundUser === null) {
           return { ok: false, message: "존재하지 않는 유저입니다." };
         }
-
         return { ok: true, message: "프로필 보기에 성공하였습니다.", user: foundUser };
       } catch (error) {
         console.log("seeProfile error");

@@ -25,6 +25,7 @@ const resolvers: Resolvers = {
         let avatarUrl: string | undefined = undefined;
         const foundUser: User | null = await prisma.user.findUnique({ where: { id: loggedInUser?.id } });
 
+        // 개발 환경에서 파일 업로드
         if (process.env.NODE_ENV === "development" && avatar) {
           const { filename, createReadStream }: AvatarFile = avatar.file;
           const newFilename: string = `${Date.now()}-${filename}`;
@@ -35,6 +36,7 @@ const resolvers: Resolvers = {
           await finished(writeStream);
         }
 
+        // 배포 환경에서 파일 업로드
         if (process.env.NODE_ENV !== "development" && avatar) {
           if (foundUser && foundUser.avatarUrl !== null) {
             await handleDeleteFileFromS3(foundUser.avatarUrl);

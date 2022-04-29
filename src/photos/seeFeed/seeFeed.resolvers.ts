@@ -8,6 +8,7 @@ interface SeeFeedArgs {
 
 interface SeeFeedResult extends CommonResult {
   photos?: Photo[];
+  lastPhotoId?: number;
 }
 
 const resolvers: Resolvers = {
@@ -21,10 +22,10 @@ const resolvers: Resolvers = {
           orderBy: { createdAt: "desc" },
           cursor: cursor === undefined ? undefined : { id: cursor },
           skip: cursor === undefined ? 0 : 1,
-          take: 9,
+          take: 6,
         });
-
-        return { ok: true, message: "피드 보기에 성공하였습니다.", photos: foundPhotos };
+        const lastPhoto: Photo | undefined = [...foundPhotos].pop();
+        return { ok: true, message: "피드 보기에 성공하였습니다.", photos: foundPhotos, lastPhotoId: lastPhoto?.id };
       } catch (error) {
         console.log("seeFeed error");
         return { ok: false, message: "피드 보기에 실패하였습니다." };

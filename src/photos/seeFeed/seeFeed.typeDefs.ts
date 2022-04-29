@@ -5,6 +5,7 @@ export default gql`
     ok: Boolean!
     message: String!
     photos: [Photo]
+    lastPhotoId: Int
   }
 
   type Query {

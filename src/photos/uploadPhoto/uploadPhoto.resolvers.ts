@@ -23,6 +23,7 @@ const resolvers: Resolvers = {
 
         let photoUrl: string = "";
 
+        // 개발 환경에서 파일 업로드
         if (process.env.NODE_ENV === "development" && photo) {
           const { filename, createReadStream }: AvatarFile = photo.file;
           const newFilename: string = `${Date.now()}-${filename}`;
@@ -33,6 +34,7 @@ const resolvers: Resolvers = {
           await finished(writeStream);
         }
 
+        // 배포 환경에서 파일 업로드
         if (process.env.NODE_ENV !== "development" && photo) {
           photoUrl = await handleUploadFileToS3(photo, "photos", loggedInUser?.username as string);
         }
