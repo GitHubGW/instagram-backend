@@ -8,6 +8,7 @@ import { execute, subscribe } from "graphql";
 import { ConnectionContext, SubscriptionServer } from "subscriptions-transport-ws";
 import { User } from ".prisma/client";
 import { handleGetLoggedInUser, handleCheckLogin } from "./users/users.utils";
+import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
 import prisma from "./prisma";
 import schema from "./schema";
 
@@ -19,7 +20,7 @@ interface ConnectionParams {
 const startServer = async (): Promise<void> => {
   const app: Express = express();
   app.use(graphqlUploadExpress());
-  // app.use(morgan("dev"));
+  app.use(morgan("dev"));
   app.use("/uploads", express.static("uploads"));
 
   const httpServer: Server = createServer(app);
@@ -45,7 +46,9 @@ const startServer = async (): Promise<void> => {
       const foundUser: User | null = await handleGetLoggedInUser(req.headers.token);
       return { prisma, loggedInUser: foundUser, handleCheckLogin };
     },
+    introspection: true,
     plugins: [
+      ApolloServerPluginLandingPageGraphQLPlayground,
       {
         async serverWillStart() {
           return {

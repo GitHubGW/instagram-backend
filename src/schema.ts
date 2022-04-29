@@ -4,8 +4,8 @@ import { makeExecutableSchema } from "@graphql-tools/schema";
 import { IResolvers } from "@graphql-tools/utils";
 import { DocumentNode, GraphQLSchema } from "graphql";
 
-const typeDefsArray: any[] = loadFilesSync(`${__dirname}/**/*.typeDefs.ts`);
-const resolversArray: any[] = loadFilesSync(`${__dirname}/**/*.resolvers.ts`);
+const typeDefsArray: any[] = loadFilesSync(`${__dirname}/**/*.typeDefs.{js,ts}`);
+const resolversArray: any[] = loadFilesSync(`${__dirname}/**/*.resolvers.{js,ts}`);
 
 const mergedTypeDefs: DocumentNode = mergeTypeDefs(typeDefsArray);
 const mergedResolvers: IResolvers = mergeResolvers(resolversArray);
