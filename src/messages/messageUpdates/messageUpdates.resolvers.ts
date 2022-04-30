@@ -1,9 +1,9 @@
+import prisma from "../../prisma";
+import pubsub from "../../pubsub";
 import { withFilter } from "graphql-subscriptions";
 import { Message } from ".prisma/client";
 import { User } from ".prisma/client";
 import { Room } from ".prisma/client";
-import pubsub from "../../pubsub";
-import prisma from "../../prisma";
 
 interface MessageUpdatesPayload {
   messageUpdates: Message;

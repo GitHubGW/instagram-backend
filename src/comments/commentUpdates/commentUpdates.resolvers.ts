@@ -1,7 +1,7 @@
-import { Comment, Photo, User } from ".prisma/client";
-import { withFilter } from "graphql-subscriptions";
 import prisma from "../../prisma";
 import pubsub from "../../pubsub";
+import { Comment, Photo, User } from ".prisma/client";
+import { withFilter } from "graphql-subscriptions";
 
 interface CommentUpdatesPayload {
   commentUpdates: Comment;

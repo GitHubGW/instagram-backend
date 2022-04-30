@@ -1,7 +1,7 @@
-import { Like, Photo, User } from ".prisma/client";
-import { withFilter } from "graphql-subscriptions";
 import prisma from "../../prisma";
 import pubsub from "../../pubsub";
+import { Like, Photo, User } from ".prisma/client";
+import { withFilter } from "graphql-subscriptions";
 
 interface LikeUpdatesPayload {
   likeUpdates: Like;

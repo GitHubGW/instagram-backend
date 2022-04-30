@@ -1,5 +1,5 @@
-import { User } from ".prisma/client";
 import pubsub from "../../pubsub";
+import { User } from ".prisma/client";
 import { CommonResult } from "../../shared/shared.interfaces";
 import { Context, Resolvers } from "../../types";
 

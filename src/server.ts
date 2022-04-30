@@ -1,16 +1,16 @@
 import "dotenv/config";
 import express, { Express } from "express";
 import morgan from "morgan";
-import { ApolloServer, ExpressContext } from "apollo-server-express";
-import { graphqlUploadExpress } from "graphql-upload";
-import { createServer, Server } from "http";
-import { execute, subscribe } from "graphql";
-import { ConnectionContext, SubscriptionServer } from "subscriptions-transport-ws";
-import { User } from ".prisma/client";
-import { handleGetLoggedInUser, handleCheckLogin } from "./users/users.utils";
-import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
 import prisma from "./prisma";
 import schema from "./schema";
+import { User } from ".prisma/client";
+import { createServer, Server } from "http";
+import { execute, subscribe } from "graphql";
+import { graphqlUploadExpress } from "graphql-upload";
+import { ApolloServer, ExpressContext } from "apollo-server-express";
+import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
+import { ConnectionContext, SubscriptionServer } from "subscriptions-transport-ws";
+import { handleGetLoggedInUser, handleCheckLogin } from "./users/users.utils";
 
 interface ConnectionParams {
   token?: string;

@@ -1,7 +1,7 @@
-import { User } from ".prisma/client";
-import { withFilter } from "graphql-subscriptions";
 import prisma from "../../prisma";
 import pubsub from "../../pubsub";
+import { User } from ".prisma/client";
+import { withFilter } from "graphql-subscriptions";
 
 interface FollowUpdatesPayload {
   followUpdates: User;

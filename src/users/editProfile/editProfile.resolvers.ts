@@ -1,5 +1,5 @@
-import { User } from ".prisma/client";
 import * as bcrypt from "bcrypt";
+import { User } from ".prisma/client";
 import { createWriteStream, ReadStream, WriteStream } from "fs";
 import { finished } from "stream/promises";
 import { AvatarFile, CommonResult } from "../../shared/shared.interfaces";
