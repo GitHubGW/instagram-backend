@@ -10,7 +10,7 @@ const resolvers: Resolvers = {
   Query: {
     seeRecommendPhotos: async (_: any, __: any, { prisma }: Context): Promise<SeeRecommendPhotosResult> => {
       try {
-        const foundPhotos: Photo[] = await prisma.photo.findMany({ take: 20 });
+        const foundPhotos: Photo[] = await prisma.photo.findMany({ take: 25 });
         return { ok: true, message: "추천 사진 보기에 성공하였습니다.", photos: foundPhotos };
       } catch (error) {
         console.log("seeRecommendPhotos error");
