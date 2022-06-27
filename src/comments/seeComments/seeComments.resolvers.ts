@@ -13,7 +13,7 @@ interface SeeCommentsResult extends CommonResult {
 
 const resolvers: Resolvers = {
   Query: {
-    seeComments: async (_: any, { photoId, cursor }: SeeCommentsArgs, { prisma }: Context): Promise<SeeCommentsResult> => {
+    seeComments: async (_, { photoId, cursor }: SeeCommentsArgs, { prisma }: Context): Promise<SeeCommentsResult> => {
       try {
         const countedPhoto: number = await prisma.photo.count({ where: { id: photoId } });
 

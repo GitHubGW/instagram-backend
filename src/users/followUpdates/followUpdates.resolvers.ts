@@ -18,7 +18,7 @@ interface FollowUpdatesContext {
 const resolvers = {
   Subscription: {
     followUpdates: {
-      subscribe: async (parent: any, args: FollowUpdatesArgs, context: FollowUpdatesContext, info: any): Promise<AsyncIterator<any, any, undefined>> => {
+      subscribe: async (parent: any, args: FollowUpdatesArgs, context: FollowUpdatesContext, info: any) => {
         const foundUser: User | null = await prisma.user.findFirst({
           where: { id: args.userId, username: context.loggedInUser?.username },
         });
@@ -29,7 +29,7 @@ const resolvers = {
 
         return withFilter(
           () => pubsub.asyncIterator(["FOLLOW_UPDATES"]),
-          (payload: FollowUpdatesPayload, args: FollowUpdatesArgs, context: FollowUpdatesContext, info: any): boolean => {
+          (payload: FollowUpdatesPayload, args: FollowUpdatesArgs): boolean => {
             if (payload.followUpdates.id === args.userId) {
               return false;
             }

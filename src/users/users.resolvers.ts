@@ -28,7 +28,7 @@ const resolvers: Resolvers = {
         return null;
       }
     },
-    totalFollowing: async (parent: User, args: any, { prisma }: Context): Promise<number> => {
+    totalFollowing: async (parent: User, args, { prisma }: Context): Promise<number> => {
       try {
         const countedFollowing: number = await prisma.user.count({ where: { followers: { some: { id: parent.id } } } });
         return countedFollowing;
@@ -37,7 +37,7 @@ const resolvers: Resolvers = {
         return 0;
       }
     },
-    totalFollowers: async (parent: User, args: any, { prisma }: Context): Promise<number> => {
+    totalFollowers: async (parent: User, args, { prisma }: Context): Promise<number> => {
       try {
         const countedFollowers: number = await prisma.user.count({ where: { following: { some: { id: parent.id } } } });
         return countedFollowers;
@@ -46,7 +46,7 @@ const resolvers: Resolvers = {
         return 0;
       }
     },
-    totalPhotos: async (parent: User, args: any, { prisma }: Context): Promise<number> => {
+    totalPhotos: async (parent: User, args, { prisma }: Context): Promise<number> => {
       try {
         const countedPhotos: number = await prisma.photo.count({ where: { userId: parent.id } });
         return countedPhotos;
@@ -55,7 +55,7 @@ const resolvers: Resolvers = {
         return 0;
       }
     },
-    isFollowing: async (parent: User, args: any, { prisma, loggedInUser }: Context): Promise<boolean> => {
+    isFollowing: async (parent: User, args, { prisma, loggedInUser }: Context): Promise<boolean> => {
       try {
         if (loggedInUser === null) {
           return false;
@@ -75,7 +75,7 @@ const resolvers: Resolvers = {
         return false;
       }
     },
-    isMe: (parent: User, args: any, { loggedInUser }: Context): boolean => {
+    isMe: (parent: User, args, { loggedInUser }: Context): boolean => {
       if (loggedInUser === null || parent.id !== loggedInUser.id) {
         return false;
       }

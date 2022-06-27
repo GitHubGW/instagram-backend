@@ -8,7 +8,7 @@ interface SeeRecommendUsersResult extends CommonResult {
 
 const resolvers: Resolvers = {
   Query: {
-    seeRecommendUsers: async (_: any, __: any, { prisma, loggedInUser }: Context): Promise<SeeRecommendUsersResult> => {
+    seeRecommendUsers: async (_, __, { prisma, loggedInUser }: Context): Promise<SeeRecommendUsersResult> => {
       try {
         const foundUsers: User[] = await prisma.user.findMany({ where: { NOT: { id: loggedInUser?.id } }, take: 5 });
         return { ok: true, message: "추천 사용자 보기에 성공하였습니다.", users: foundUsers };

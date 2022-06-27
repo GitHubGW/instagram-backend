@@ -7,7 +7,7 @@ interface DeleteCommentArgs {
 
 const resolvers: Resolvers = {
   Mutation: {
-    deleteComment: async (_: any, { commentId }: DeleteCommentArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<CommonResult> => {
+    deleteComment: async (_, { commentId }: DeleteCommentArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<CommonResult> => {
       try {
         handleCheckLogin(loggedInUser);
 

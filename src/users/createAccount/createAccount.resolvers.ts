@@ -12,7 +12,7 @@ interface CreateAccountArgs {
 
 const resolvers: Resolvers = {
   Mutation: {
-    createAccount: async (_: any, { name, username, email, password }: CreateAccountArgs, { prisma }: Context): Promise<CommonResult> => {
+    createAccount: async (_, { name, username, email, password }: CreateAccountArgs, { prisma }: Context): Promise<CommonResult> => {
       try {
         const foundUser: User | null = await prisma.user.findFirst({ where: { OR: [{ username }, { email }] } });
 

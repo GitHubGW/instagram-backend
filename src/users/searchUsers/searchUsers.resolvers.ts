@@ -13,7 +13,7 @@ interface SearchUsersResult extends CommonResult {
 
 const resolvers: Resolvers = {
   Query: {
-    searchUsers: async (_: any, { username, cursor }: SearchUsersArgs, { prisma }: Context): Promise<SearchUsersResult> => {
+    searchUsers: async (_, { username, cursor }: SearchUsersArgs, { prisma }: Context): Promise<SearchUsersResult> => {
       try {
         if (username === "") {
           throw new Error();

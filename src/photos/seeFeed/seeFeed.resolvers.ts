@@ -13,7 +13,7 @@ interface SeeFeedResult extends CommonResult {
 
 const resolvers: Resolvers = {
   Query: {
-    seeFeed: async (_: any, { cursor }: SeeFeedArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<SeeFeedResult> => {
+    seeFeed: async (_, { cursor }: SeeFeedArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<SeeFeedResult> => {
       try {
         handleCheckLogin(loggedInUser);
 

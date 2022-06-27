@@ -13,7 +13,7 @@ interface SeeFollowingResult extends CommonResult {
 
 const resolvers: Resolvers = {
   Query: {
-    seeFollowing: async (_: any, { username, cursor }: SeeFollowingArgs, { prisma }: Context): Promise<SeeFollowingResult> => {
+    seeFollowing: async (_, { username, cursor }: SeeFollowingArgs, { prisma }: Context): Promise<SeeFollowingResult> => {
       try {
         const countedUser: number = await prisma.user.count({ where: { username } });
 

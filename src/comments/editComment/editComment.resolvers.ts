@@ -8,7 +8,7 @@ interface EditCommentArgs {
 
 const resolvers: Resolvers = {
   Mutation: {
-    editComment: async (_: any, { commentId, text }: EditCommentArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<CommonResult> => {
+    editComment: async (_, { commentId, text }: EditCommentArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<CommonResult> => {
       try {
         handleCheckLogin(loggedInUser);
 

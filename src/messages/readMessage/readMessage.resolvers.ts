@@ -8,7 +8,7 @@ interface ReadMessageArgs {
 
 const resolvers: Resolvers = {
   Mutation: {
-    readMessage: async (_: any, { messageId }: ReadMessageArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<CommonResult> => {
+    readMessage: async (_, { messageId }: ReadMessageArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<CommonResult> => {
       try {
         handleCheckLogin(loggedInUser);
 

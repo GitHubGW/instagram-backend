@@ -12,7 +12,7 @@ interface SearchHashtagsResult extends CommonResult {
 
 const resolvers: Resolvers = {
   Query: {
-    searchHashtags: async (_: any, { name }: SearchHashtagsArgs, { prisma }: Context): Promise<SearchHashtagsResult> => {
+    searchHashtags: async (_, { name }: SearchHashtagsArgs, { prisma }: Context): Promise<SearchHashtagsResult> => {
       try {
         const foundHashtags: Hashtag[] = await prisma.hashtag.findMany({
           where: { name: { contains: name.toLowerCase() } },

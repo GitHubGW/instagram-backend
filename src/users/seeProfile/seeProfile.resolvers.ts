@@ -12,7 +12,7 @@ interface SeeProfileResult extends CommonResult {
 
 const resolvers: Resolvers = {
   Query: {
-    seeProfile: async (_: any, { username }: SeeProfileArgs, { prisma }: Context): Promise<SeeProfileResult> => {
+    seeProfile: async (_, { username }: SeeProfileArgs, { prisma }: Context): Promise<SeeProfileResult> => {
       try {
         const foundUser = await prisma.user.findUnique({
           where: { username },

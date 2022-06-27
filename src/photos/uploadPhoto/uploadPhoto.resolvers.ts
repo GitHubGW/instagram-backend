@@ -17,7 +17,7 @@ interface UploadPhotoResult extends CommonResult {
 
 const resolvers: Resolvers = {
   Mutation: {
-    uploadPhoto: async (_: any, { photo, caption }: UploadPhotoArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<UploadPhotoResult> => {
+    uploadPhoto: async (_, { photo, caption }: UploadPhotoArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<UploadPhotoResult> => {
       try {
         handleCheckLogin(loggedInUser);
 

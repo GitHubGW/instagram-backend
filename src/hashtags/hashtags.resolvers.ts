@@ -21,7 +21,7 @@ const resolvers: Resolvers = {
         return null;
       }
     },
-    totalPhotos: async (parent: Hashtag, args: any, { prisma }: Context): Promise<number> => {
+    totalPhotos: async (parent: Hashtag, __, { prisma }: Context): Promise<number> => {
       try {
         const countedPhotos: number = await prisma.photo.count({ where: { hashtags: { some: { name: parent.name } } } });
         return countedPhotos;

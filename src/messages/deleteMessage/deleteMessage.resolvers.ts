@@ -8,7 +8,7 @@ interface DeleteMessageArgs {
 
 const resolvers: Resolvers = {
   Mutation: {
-    deleteMessage: async (_: any, { messageId }: DeleteMessageArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<CommonResult> => {
+    deleteMessage: async (_, { messageId }: DeleteMessageArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<CommonResult> => {
       try {
         handleCheckLogin(loggedInUser);
 

@@ -18,7 +18,7 @@ interface LikeUpdatesContext {
 const resolvers = {
   Subscription: {
     likeUpdates: {
-      subscribe: async (parent: any, args: LikeUpdatesArgs, context: LikeUpdatesContext, info: any): Promise<AsyncIterator<any, any, undefined>> => {
+      subscribe: async (parent: any, args: LikeUpdatesArgs, context: LikeUpdatesContext, info: any) => {
         const foundPhoto: Photo | null = await prisma.photo.findFirst({
           where: { id: args.photoId, userId: context.loggedInUser?.id },
         });
@@ -29,7 +29,7 @@ const resolvers = {
 
         return withFilter(
           () => pubsub.asyncIterator(["LIKE_UPDATES"]),
-          (payload: LikeUpdatesPayload, args: LikeUpdatesArgs, context: LikeUpdatesContext, info: any): boolean => {
+          (payload: LikeUpdatesPayload, args: LikeUpdatesArgs): boolean => {
             if (payload.likeUpdates.photoId !== args.photoId) {
               return false;
             }

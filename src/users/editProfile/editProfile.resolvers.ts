@@ -17,7 +17,7 @@ interface EditProfileArgs {
 
 const resolvers: Resolvers = {
   Mutation: {
-    editProfile: async (_: any, { name, username, email, password, bio, avatar }: EditProfileArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<CommonResult> => {
+    editProfile: async (_, { name, username, email, password, bio, avatar }: EditProfileArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<CommonResult> => {
       try {
         handleCheckLogin(loggedInUser);
 

@@ -7,7 +7,7 @@ interface DeleteAccountArgs {
 
 const resolvers: Resolvers = {
   Mutation: {
-    deleteAccount: async (_: any, { userId }: DeleteAccountArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<CommonResult> => {
+    deleteAccount: async (_, { userId }: DeleteAccountArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<CommonResult> => {
       try {
         handleCheckLogin(loggedInUser);
 

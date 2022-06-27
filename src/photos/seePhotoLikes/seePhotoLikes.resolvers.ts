@@ -13,7 +13,7 @@ interface SeePhotoLikesResult extends CommonResult {
 
 const resolvers: Resolvers = {
   Query: {
-    seePhotoLikes: async (_: any, { photoId, cursor }: SeePhotoLikesArgs, { prisma }: Context): Promise<SeePhotoLikesResult> => {
+    seePhotoLikes: async (_, { photoId, cursor }: SeePhotoLikesArgs, { prisma }: Context): Promise<SeePhotoLikesResult> => {
       try {
         const foundPhoto: number = await prisma.photo.count({ where: { id: photoId } });
 

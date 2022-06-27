@@ -20,7 +20,7 @@ interface MessageUpdatesContext {
 const resolvers = {
   Subscription: {
     messageUpdates: {
-      subscribe: async (parent: any, args: MessageUpdatesArgs, context: MessageUpdatesContext, info: any): Promise<AsyncIterator<any, any, undefined>> => {
+      subscribe: async (parent: any, args: MessageUpdatesArgs, context: MessageUpdatesContext, info: any) => {
         const foundRoom: Room | null = await prisma.room.findFirst({
           where: { id: args.roomId, users: { some: { id: context.loggedInUser?.id } } },
         });
@@ -31,7 +31,7 @@ const resolvers = {
 
         return withFilter(
           () => pubsub.asyncIterator(["MESSAGE_UPDATES"]),
-          (payload: MessageUpdatesPayload, args: MessageUpdatesArgs, context: MessageUpdatesContext, info: any): boolean => {
+          (payload: MessageUpdatesPayload, args: MessageUpdatesArgs): boolean => {
             if (payload.messageUpdates.roomId !== args.roomId) {
               return false;
             }

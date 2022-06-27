@@ -12,7 +12,7 @@ interface SeeHashtagResult extends CommonResult {
 
 const resolvers: Resolvers = {
   Query: {
-    seeHashtag: async (_: any, { name }: SeeHashtagArgs, { prisma }: Context): Promise<SeeHashtagResult> => {
+    seeHashtag: async (_, { name }: SeeHashtagArgs, { prisma }: Context): Promise<SeeHashtagResult> => {
       try {
         const foundHashtag: Hashtag | null = await prisma.hashtag.findUnique({ where: { name } });
 

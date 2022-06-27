@@ -8,7 +8,7 @@ interface SeeProfileResult extends CommonResult {
 
 const resolvers: Resolvers = {
   Query: {
-    seeMe: async (_: any, __: any, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<SeeProfileResult> => {
+    seeMe: async (_, __, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<SeeProfileResult> => {
       try {
         handleCheckLogin(loggedInUser);
 

@@ -8,7 +8,7 @@ interface SeeRoomsResult extends CommonResult {
 
 const resolvers: Resolvers = {
   Query: {
-    seeRooms: async (_: any, __: any, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<SeeRoomsResult> => {
+    seeRooms: async (_, __, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<SeeRoomsResult> => {
       try {
         handleCheckLogin(loggedInUser);
 

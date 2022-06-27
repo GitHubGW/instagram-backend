@@ -3,7 +3,7 @@ import { Context, Resolvers } from "../types";
 
 const resolvers: Resolvers = {
   Room: {
-    totalUnreadMessages: async (parent: Room, __: any, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<number> => {
+    totalUnreadMessages: async (parent: Room, __, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<number> => {
       try {
         handleCheckLogin(loggedInUser);
         const countedMessages: number = await prisma.message.count({
@@ -19,7 +19,7 @@ const resolvers: Resolvers = {
         return 0;
       }
     },
-    latestMessage: async (parent: Room, __any, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<Message | null> => {
+    latestMessage: async (parent: Room, __, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<Message | null> => {
       try {
         handleCheckLogin(loggedInUser);
         const latestMessage: Message | null = await prisma.message.findFirst({

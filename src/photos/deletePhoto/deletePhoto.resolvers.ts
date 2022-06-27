@@ -9,7 +9,7 @@ interface DeletePhotoArgs {
 
 const resolvers: Resolvers = {
   Mutation: {
-    deletePhoto: async (_: any, { photoId }: DeletePhotoArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<CommonResult> => {
+    deletePhoto: async (_, { photoId }: DeletePhotoArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<CommonResult> => {
       try {
         handleCheckLogin(loggedInUser);
 

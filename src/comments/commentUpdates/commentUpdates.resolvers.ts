@@ -18,7 +18,7 @@ interface CommentUpdatesContext {
 const resolvers = {
   Subscription: {
     commentUpdates: {
-      subscribe: async (parent: any, args: CommentUpdatesArgs, context: CommentUpdatesContext, info: any): Promise<AsyncIterator<any, any, undefined>> => {
+      subscribe: async (parent: any, args: CommentUpdatesArgs, context: CommentUpdatesContext, info: any) => {
         const foundPhoto: Photo | null = await prisma.photo.findFirst({
           where: { id: args.photoId, userId: context.loggedInUser?.id },
         });
@@ -29,7 +29,7 @@ const resolvers = {
 
         return withFilter(
           () => pubsub.asyncIterator(["COMMENT_UPDATES"]),
-          (payload: CommentUpdatesPayload, args: CommentUpdatesArgs, context: CommentUpdatesContext, info: any): boolean => {
+          (payload: CommentUpdatesPayload, args: CommentUpdatesArgs, context: CommentUpdatesContext): boolean => {
             if (payload.commentUpdates.photoId !== args.photoId) {
               return false;
             }

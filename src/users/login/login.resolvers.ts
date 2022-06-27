@@ -15,7 +15,7 @@ interface LoginResult extends CommonResult {
 
 const resolvers: Resolvers = {
   Mutation: {
-    login: async (_: any, { username, password }: LoginArgs, { prisma }: Context): Promise<LoginResult> => {
+    login: async (_, { username, password }: LoginArgs, { prisma }: Context): Promise<LoginResult> => {
       try {
         const foundUser: User | null = await prisma.user.findFirst({ where: { username } });
 

@@ -13,7 +13,7 @@ interface SearchPhotosResult extends CommonResult {
 
 const resolvers: Resolvers = {
   Query: {
-    searchPhotos: async (_: any, { keyword, cursor }: SearchPhotosArgs, { prisma }: Context): Promise<SearchPhotosResult> => {
+    searchPhotos: async (_, { keyword, cursor }: SearchPhotosArgs, { prisma }: Context): Promise<SearchPhotosResult> => {
       try {
         const foundPhotos: Photo[] = await prisma.photo.findMany({
           where: { caption: { contains: keyword } },

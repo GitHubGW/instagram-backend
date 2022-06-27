@@ -10,7 +10,7 @@ interface CreateCommentArgs {
 
 const resolvers: Resolvers = {
   Mutation: {
-    createComment: async (_: any, { photoId, text }: CreateCommentArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<CommonResult> => {
+    createComment: async (_, { photoId, text }: CreateCommentArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<CommonResult> => {
       try {
         handleCheckLogin(loggedInUser);
 

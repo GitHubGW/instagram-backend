@@ -8,7 +8,7 @@ interface SeeUsersResult extends CommonResult {
 
 const resolvers: Resolvers = {
   Query: {
-    seeUsers: async (_: any, __: any, { prisma }: Context): Promise<SeeUsersResult> => {
+    seeUsers: async (_, __, { prisma }: Context): Promise<SeeUsersResult> => {
       try {
         const foundUsers: User[] = await prisma.user.findMany({ include: { following: true, followers: true } });
         return { ok: true, message: "전체 유저 보기에 성공하였습니다.", users: foundUsers };

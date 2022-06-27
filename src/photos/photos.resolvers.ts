@@ -3,7 +3,7 @@ import { Context, Resolvers } from "../types";
 
 const resolvers: Resolvers = {
   Photo: {
-    user: async (parent: Photo, args: any, { prisma }: Context): Promise<User | null> => {
+    user: async (parent: Photo, __, { prisma }: Context): Promise<User | null> => {
       try {
         const foundUser: User | null = await prisma.user.findUnique({ where: { id: parent.userId } });
 
@@ -17,7 +17,7 @@ const resolvers: Resolvers = {
         return null;
       }
     },
-    hashtags: async (parent: Photo, args: any, { prisma }: Context): Promise<Hashtag[] | null> => {
+    hashtags: async (parent: Photo, __, { prisma }: Context): Promise<Hashtag[] | null> => {
       try {
         const foundHashtags: Hashtag[] = await prisma.photo.findUnique({ where: { id: parent.id } }).hashtags();
         return foundHashtags;
@@ -26,7 +26,7 @@ const resolvers: Resolvers = {
         return null;
       }
     },
-    comments: async (parent: Photo, args: any, { prisma }: Context): Promise<Comment[] | null> => {
+    comments: async (parent: Photo, __, { prisma }: Context): Promise<Comment[] | null> => {
       try {
         const foundComments: Comment[] = await await prisma.photo.findUnique({ where: { id: parent.id } }).comments({ include: { user: true } });
         return foundComments;
@@ -35,7 +35,7 @@ const resolvers: Resolvers = {
         return null;
       }
     },
-    totalLikes: async (parent: Photo, args: any, { prisma }: Context): Promise<number> => {
+    totalLikes: async (parent: Photo, __, { prisma }: Context): Promise<number> => {
       try {
         const countedLikes: number = await prisma.like.count({ where: { photoId: parent.id } });
         return countedLikes;
@@ -44,7 +44,7 @@ const resolvers: Resolvers = {
         return 0;
       }
     },
-    totalComments: async (parent: Photo, args: any, { prisma }: Context): Promise<number> => {
+    totalComments: async (parent: Photo, __, { prisma }: Context): Promise<number> => {
       try {
         const countedComments: number = await prisma.comment.count({ where: { photoId: parent.id } });
         return countedComments;
@@ -53,7 +53,7 @@ const resolvers: Resolvers = {
         return 0;
       }
     },
-    isMe: (parent: Photo, args: any, { loggedInUser }: Context): boolean => {
+    isMe: (parent: Photo, __, { loggedInUser }: Context): boolean => {
       const isMe: boolean = parent.userId === loggedInUser?.id;
 
       if (isMe === false) {
@@ -61,7 +61,7 @@ const resolvers: Resolvers = {
       }
       return true;
     },
-    isLiked: async (parent: Photo, args: any, { prisma, loggedInUser }: Context): Promise<boolean> => {
+    isLiked: async (parent: Photo, __, { prisma, loggedInUser }: Context): Promise<boolean> => {
       try {
         if (loggedInUser === null) {
           return false;

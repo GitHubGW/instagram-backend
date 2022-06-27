@@ -15,7 +15,7 @@ interface SendMessageResult extends CommonResult {
 
 const resolvers: Resolvers = {
   Mutation: {
-    sendMessage: async (_: any, { text, roomId, userId }: SendMessageArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<SendMessageResult> => {
+    sendMessage: async (_, { text, roomId, userId }: SendMessageArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<SendMessageResult> => {
       try {
         handleCheckLogin(loggedInUser);
 

@@ -13,7 +13,7 @@ interface FollowUserResult extends CommonResult {
 
 const resolvers: Resolvers = {
   Mutation: {
-    followUser: async (_: any, { username }: FollowUserArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<FollowUserResult> => {
+    followUser: async (_, { username }: FollowUserArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<FollowUserResult> => {
       try {
         handleCheckLogin(loggedInUser);
 

@@ -9,7 +9,7 @@ interface ToggleLikePhotoArgs {
 
 const resolvers: Resolvers = {
   Mutation: {
-    toggleLikePhoto: async (_: any, { photoId }: ToggleLikePhotoArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<CommonResult> => {
+    toggleLikePhoto: async (_, { photoId }: ToggleLikePhotoArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<CommonResult> => {
       try {
         handleCheckLogin(loggedInUser);
 

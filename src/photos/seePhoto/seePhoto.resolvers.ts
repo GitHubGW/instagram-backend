@@ -12,7 +12,7 @@ interface SeePhotoResult extends CommonResult {
 
 const resolvers: Resolvers = {
   Query: {
-    seePhoto: async (_: any, { photoId }: SeePhotoArgs, { prisma }: Context): Promise<SeePhotoResult> => {
+    seePhoto: async (_, { photoId }: SeePhotoArgs, { prisma }: Context): Promise<SeePhotoResult> => {
       try {
         const foundPhoto: Photo | null = await prisma.photo.findUnique({ where: { id: photoId } });
 

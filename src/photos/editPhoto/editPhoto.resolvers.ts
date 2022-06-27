@@ -10,7 +10,7 @@ interface EditPhotoArgs {
 
 const resolvers: Resolvers = {
   Mutation: {
-    editPhoto: async (_: any, { photoId, caption }: EditPhotoArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<CommonResult> => {
+    editPhoto: async (_, { photoId, caption }: EditPhotoArgs, { prisma, loggedInUser, handleCheckLogin }: Context): Promise<CommonResult> => {
       try {
         handleCheckLogin(loggedInUser);
 
